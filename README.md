@@ -4,8 +4,16 @@ IAtaaa Server is web platform to manage artificial intelligence game. The name I
 
 ## Getting Started
 
-### Indication
-Use `./mvnw` command instead of `mvn` if you haven't Maven.
+**Indication**: Use `./mvnw` command instead of `mvn` if you haven't Maven.
+
+### Maven Module
+* checkers-rules : implementation of checkers rules.
+
+#### Build modules
+To build maven modules, run :
+```sh
+mvn clean package
+```
 
 ## Contributor
 * Anthony GODIN <gdn.anthony@gmail.com>
