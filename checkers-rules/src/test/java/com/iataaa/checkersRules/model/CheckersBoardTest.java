@@ -2,8 +2,11 @@ package com.iataaa.checkersRules.model;
 
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Set;
 
+import static com.iataaa.checkersRules.model.CheckersBoard.PIECE_SIZE;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CheckersBoardTest {
@@ -11,8 +14,8 @@ public class CheckersBoardTest {
     @Test
     public void convertInitialBoardStringToBoard() {
         // GIVEN
-        Case[] cases = new Case[50];
-        for(int i = 0; i < 50; ++i) {
+        Case[] cases = new Case[PIECE_SIZE];
+        for(int i = 0; i < PIECE_SIZE; ++i) {
             if (i < 20) cases[i] = Case.WHITE_PIECE;
             if (i >= 20 && i < 30) cases[i] = Case.EMPTY;
             if (i >= 30) cases[i] = Case.BLACK_PIECE;
@@ -51,8 +54,8 @@ public class CheckersBoardTest {
     @Test
     public void convertBoardStringToBoard() {
         // GIVEN
-        Case[] cases = new Case[50];
-        for(int i = 0; i < 50; ++i) {
+        Case[] cases = new Case[PIECE_SIZE];
+        for(int i = 0; i < PIECE_SIZE; ++i) {
             if (i % 3 == 0) {
                 cases[i] = Case.WHITE_PIECE;
             } else if (i % 3 == 1) {
@@ -96,8 +99,8 @@ public class CheckersBoardTest {
     @Test
     public void convertBoardStringWithQueenToBoard() {
         // GIVEN
-        Case[] cases = new Case[50];
-        for(int i = 0; i < 50; ++i) {
+        Case[] cases = new Case[PIECE_SIZE];
+        for(int i = 0; i < PIECE_SIZE; ++i) {
             if (i % 3 == 0) {
                 cases[i] = Case.BLACK_QUEEN;
             } else if (i % 3 == 1) {
@@ -140,8 +143,8 @@ public class CheckersBoardTest {
     @Test
     public void validateReturnIsValid() {
         // GIVEN
-        Case[] cases = new Case[50];
-        for(int i = 0; i < 50; ++i) {
+        Case[] cases = new Case[PIECE_SIZE];
+        for(int i = 0; i < PIECE_SIZE; ++i) {
             cases[i] = Case.EMPTY;
         }
         ValidityCheckersBoard expect = new ValidityCheckersBoard();
@@ -156,7 +159,8 @@ public class CheckersBoardTest {
     @Test
     public void validateReturnIsNotValidBecauseCasesIsNull() {
         // GIVEN
-        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
+        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.allOf(ValidityErrorCheckersBoard.class);
+        expectErrors.addAll(
                 Arrays.asList(ValidityErrorCheckersBoard.values())
         );
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
@@ -175,9 +179,8 @@ public class CheckersBoardTest {
         for(int i = 0; i < 49; ++i) {
             cases[i] = Case.EMPTY;
         }
-        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
-                Collections.singletonList(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50)
-        );
+        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
+        expectErrors.add(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
 
         // WHEN
@@ -190,15 +193,14 @@ public class CheckersBoardTest {
     @Test
     public void validateReturnIsNotValidBecauseCasesContainsNull() {
         // GIVEN
-        Case[] cases = new Case[50];
-        for(int i = 0; i < 50; ++i) {
+        Case[] cases = new Case[PIECE_SIZE];
+        for(int i = 0; i < PIECE_SIZE; ++i) {
             cases[i] = Case.EMPTY;
         }
         cases[40] = null;
 
-        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
-                Collections.singletonList(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL)
-        );
+        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
+        expectErrors.add(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
 
         // WHEN
@@ -216,7 +218,8 @@ public class CheckersBoardTest {
             cases[i] = Case.EMPTY;
         }
         cases[40] = null;
-        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
+        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
+        expectErrors.addAll(
                 Arrays.asList(
                         ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50,
                         ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL

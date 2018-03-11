@@ -1,25 +1,27 @@
 package com.iataaa.checkersRules.rules;
 
 import com.iataaa.checkersRules.model.Case;
-import com.iataaa.checkersRules.model.Couple;
-import com.iataaa.checkersRules.model.EnumPlayer;
-import com.iataaa.checkersRules.model.Game;
+import com.iataaa.checkersRules.model.Player;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.iataaa.checkersRules.model.CheckersBoard.*;
+
 public class CheckersRules {
 
-    private static final int FIRST_POSITION_OF_LAST_LINE = Game.CASE_NB_OF_LINE
-        * (Game.LINE_NB - 1);
-    private static final int LAST_POSITION_OF_FIRST_LINE = Game.CASE_NB_OF_LINE - 1;
+    private static final int FIRST_POSITION_OF_LAST_LINE = CASE_NB_OF_LINE
+        * (LINE_NB - 1);
+    private static final int LAST_POSITION_OF_FIRST_LINE = CASE_NB_OF_LINE - 1;
 
     private static List<Case[]> availableMoves = new ArrayList<>();
     private static int moveSize = 1;
 
-    public static List<Case[]> getAvailableMoves(Case[] cases, EnumPlayer p) {
+    public static List<Case[]> getAvailableMoves(Case[] cases, Player p) {
         List<Integer> whiteCases;
-        if (p == EnumPlayer.PLAYER_2) {
+        if (p == Player.PLAYER_2) {
             cases = reverseCases(cases);
         }
         whiteCases = getWhiteCases(cases);
@@ -30,7 +32,7 @@ public class CheckersRules {
         transformPieceToQueen();
 
         List<Case[]> availableMovesList;
-        if (p == EnumPlayer.PLAYER_2) {
+        if (p == Player.PLAYER_2) {
             availableMovesList = new ArrayList<>();
             availableMoves.forEach((c) -> availableMovesList.add(reverseCases(c)));
         } else {
@@ -45,12 +47,12 @@ public class CheckersRules {
 
 
 // PRIVATE
-    
+
     // Return -1 if result don't exist.
     private static int getTopLeftCornerPosition(int position) {
         int res = -1;
         if ( !(position % 10 == 0 || position >= FIRST_POSITION_OF_LAST_LINE) ) {
-            res = position + (position / 5) % 2 + (Game.PIECE_SIZE / 10) - 1;
+            res = position + (position / 5) % 2 + (PIECE_SIZE / 10) - 1;
         }
         return res;
     }
@@ -59,7 +61,7 @@ public class CheckersRules {
     private static int getTopRightCornerPosition(int position) {
         int res = -1;
         if ( !( (position + 1) % 10 == 0 || position >= FIRST_POSITION_OF_LAST_LINE) ) {
-            res = position + (position / 5) % 2 + (Game.PIECE_SIZE / 10);
+            res = position + (position / 5) % 2 + (PIECE_SIZE / 10);
         }
         return res;
     }
@@ -68,8 +70,7 @@ public class CheckersRules {
     private static int getBottomLeftCornerPosition(int position) {
         int res = -1;
         if ( !(position % 10 == 0 || position <= LAST_POSITION_OF_FIRST_LINE) ) {
-            // Arrière gauche : pos - (SIZE/10)-1 - (pos/5)%2
-            res = position - (Game.PIECE_SIZE / 10)  - (((position / 5) + 1) % 2);
+            res = position - (PIECE_SIZE / 10)  - (((position / 5) + 1) % 2);
         }
         return res;
     }
@@ -78,7 +79,7 @@ public class CheckersRules {
     private static int getBottomRightCornerPosition(int position) {
         int res = -1;
         if ( !( (position + 1) % 10 == 0 || position <= LAST_POSITION_OF_FIRST_LINE) ) {
-            res = position - Game.PIECE_SIZE / 10  - ((position / 5 + 1) % 2) + 1;
+            res = position - PIECE_SIZE / 10  - ((position / 5 + 1) % 2) + 1;
         }
         return res;
     }
@@ -361,13 +362,13 @@ public class CheckersRules {
             List<Integer> positions;
             Case[] newCases;
             int jumpedPos;
-            Couple<List<Integer>, Integer> couple;
+            Pair<List<Integer>, Integer> couple;
 
             // Top left
             positions = getAllTopLeftCornerPositions(srcPosition);
             couple = getPositionsToJump(pieces, positions);
-            positions = couple.getFirst();
-            jumpedPos = couple.getSecond();
+            positions = couple.getLeft();
+            jumpedPos = couple.getRight();
             if (jumpedPos != -1) {
                 for (int tgtPos : positions) {
                     if (isNotInInterval(srcPosition, tgtPos, Direction.TOP_LEFT, jumpedCases)) {
@@ -383,8 +384,8 @@ public class CheckersRules {
             // Top right
             positions = getAllTopRightCornerPositions(srcPosition);
             couple = getPositionsToJump(pieces, positions);
-            positions = couple.getFirst();
-            jumpedPos = couple.getSecond();
+            positions = couple.getLeft();
+            jumpedPos = couple.getRight();
             if (jumpedPos != -1) {
                 for (int tgtPos : positions) {
                     if (isNotInInterval(srcPosition, tgtPos, Direction.TOP_RIGHT, jumpedCases)) {
@@ -401,8 +402,8 @@ public class CheckersRules {
             // Bottom left
             positions = getAllBottomLeftCornerPositions(srcPosition);
             couple = getPositionsToJump(pieces, positions);
-            positions = couple.getFirst();
-            jumpedPos = couple.getSecond();
+            positions = couple.getLeft();
+            jumpedPos = couple.getRight();
             if (jumpedPos != -1) {
                 for (int tgtPos : positions) {
                     if (isNotInInterval(srcPosition, tgtPos, Direction.BOTTOM_LEFT, jumpedCases)) {
@@ -419,8 +420,8 @@ public class CheckersRules {
             // Bottom right
             positions = getAllBottomRightCornerPositions(srcPosition);
             couple = getPositionsToJump(pieces, positions);
-            positions = couple.getFirst();
-            jumpedPos = couple.getSecond();
+            positions = couple.getLeft();
+            jumpedPos = couple.getRight();
             if (jumpedPos != -1) {
                 for (int tgtPos : positions) {
                     if (isNotInInterval(srcPosition, tgtPos, Direction.BOTTOM_RIGHT, jumpedCases)) {
@@ -453,8 +454,8 @@ public class CheckersRules {
     // Positions is diagonal positions list.
     // This method return positions list where queen can move after jump piece
     // and return jumped piece position.
-    // If getPositionsToJump(..).getSecond == -1 then queen can't jump piece.
-    private static Couple<List<Integer>, Integer> getPositionsToJump(Case[] pieces, List<Integer> positions) {
+    // If getPositionsToJump(..).getRight == -1 then queen can't jump piece.
+    private static Pair<List<Integer>, Integer> getPositionsToJump(Case[] pieces, List<Integer> positions) {
         List<Integer> positionsToJump = new ArrayList<>();
         int jumpedPosition = -1;
         if (!positions.isEmpty()) {
@@ -487,7 +488,7 @@ public class CheckersRules {
                 }
             }
         }
-        return new Couple<>(positionsToJump, jumpedPosition);
+        return new ImmutablePair<>(positionsToJump, jumpedPosition);
     }
 
 
@@ -557,13 +558,13 @@ public class CheckersRules {
     }
 
     private static int reverseCaseIndice(int indice) {
-        assert indice >= 0 && indice < Game.PIECE_SIZE : "indice = " + indice;
+        assert indice >= 0 && indice < PIECE_SIZE : "indice = " + indice;
         return 49 - indice;
     }
 
     public static Case[] reverseCases(Case[] pieces) {
-        Case[] reverseCases = new Case[Game.PIECE_SIZE];
-        for (int i = 0; i < Game.PIECE_SIZE; ++i) {
+        Case[] reverseCases = new Case[PIECE_SIZE];
+        for (int i = 0; i < PIECE_SIZE; ++i) {
             reverseCases[reverseCaseIndice(i)] = oppositeColor(pieces[i]);
         }
 

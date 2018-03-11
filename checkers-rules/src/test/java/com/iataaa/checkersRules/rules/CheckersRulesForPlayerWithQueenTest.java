@@ -2,7 +2,7 @@ package com.iataaa.checkersRules.rules;
 
 import com.iataaa.checkersRules.model.Case;
 import com.iataaa.checkersRules.model.CheckersBoard;
-import com.iataaa.checkersRules.model.EnumPlayer;
+import com.iataaa.checkersRules.model.Player;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         );
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnlyElementsOf(expected);
@@ -94,7 +94,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         );
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnlyElementsOf(expected);
@@ -134,7 +134,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         );
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnlyElementsOf(expected);
@@ -180,7 +180,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         expected.forEach((e) -> e[16] = Case.EMPTY);
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnlyElementsOf(expected);
@@ -225,7 +225,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         });
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnlyElementsOf(expected);
@@ -285,7 +285,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         Case[] expected = expectedCheckersBoard.getCases();
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnly(expected);
@@ -334,7 +334,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         });
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsExactlyElementsOf(expected);
@@ -382,7 +382,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         });
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsExactlyElementsOf(expected);
@@ -428,7 +428,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         );
 
         // WHEN
-        List<Case[]> result = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> result = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(result).containsOnlyElementsOf(expected);
@@ -513,7 +513,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         Case[] expected2 = expectedCheckersBoard2.getCases();
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_1);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(results).containsOnly(expected1, expected2);
@@ -561,7 +561,7 @@ public class CheckersRulesForPlayerWithQueenTest {
         });
 
         // WHEN
-        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, EnumPlayer.PLAYER_2);
+        List<Case[]> results = CheckersRules.getAvailableMoves(initialBoard, Player.PLAYER_2);
 
         // THEN
         assertThat(results).containsExactlyElementsOf(expected);

@@ -1,6 +1,5 @@
 package com.iataaa.checkersRules.model;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,10 +17,14 @@ public class ValidityCheckersBoard {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ValidityCheckersBoard)) return false;
-        ValidityCheckersBoard that = (ValidityCheckersBoard) o;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof ValidityCheckersBoard)) {
+            return false;
+        }
+        ValidityCheckersBoard that = (ValidityCheckersBoard) object;
         return isValid() == that.isValid() &&
                 Objects.equals(getErrors(), that.getErrors());
     }
