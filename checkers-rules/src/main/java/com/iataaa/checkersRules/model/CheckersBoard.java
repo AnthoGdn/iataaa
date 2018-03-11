@@ -1,7 +1,6 @@
 package com.iataaa.checkersRules.model;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +22,24 @@ public class CheckersBoard {
 
     public Case[] getCases() {
         return cases;
+    }
+
+    public static ValidityCheckersBoard validate(Case[] cases) {
+        Set<ValidityErrorCheckersBoard> errors = new HashSet<>();
+        if (cases == null) {
+            errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_IS_NULL);
+            errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
+            errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
+        } else {
+            if (cases.length != 50) {
+                errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
+            }
+            if (Arrays.stream(cases).anyMatch(Objects::isNull)) {
+                errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
+            }
+        }
+
+        return errors.isEmpty() ? new ValidityCheckersBoard() : new ValidityCheckersBoard(errors);
     }
 
     @Override
@@ -68,7 +85,6 @@ public class CheckersBoard {
     }
 
     // PRIVATE
-
     private boolean boardIsValid(Case[] cases) {
         return cases != null
                 && cases.length == 50
