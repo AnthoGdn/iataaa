@@ -2,6 +2,8 @@ package com.iataaa.checkersRules.model;
 
 import org.junit.Test;
 
+import java.util.*;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CheckersBoardTest {
@@ -133,5 +135,99 @@ public class CheckersBoardTest {
 
         // THEN
         assertThat(checkersboard).isEqualTo(expectedBoard);
+    }
+
+    @Test
+    public void validateReturnIsValid() {
+        // GIVEN
+        Case[] cases = new Case[50];
+        for(int i = 0; i < 50; ++i) {
+            cases[i] = Case.EMPTY;
+        }
+        ValidityCheckersBoard expect = new ValidityCheckersBoard();
+
+        // WHEN
+        ValidityCheckersBoard validity = CheckersBoard.validate(cases);
+
+        // THEN
+        assertThat(validity).isEqualTo(expect);
+    }
+
+    @Test
+    public void validateReturnIsNotValidBecauseCasesIsNull() {
+        // GIVEN
+        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
+                Arrays.asList(ValidityErrorCheckersBoard.values())
+        );
+        ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
+
+        // WHEN
+        ValidityCheckersBoard validity = CheckersBoard.validate(null);
+
+        // THEN
+        assertThat(validity).isEqualTo(expect);
+    }
+
+    @Test
+    public void validateReturnIsNotValidBecauseCasesLengthIsNotEqual50() {
+        // GIVEN
+        Case[] cases = new Case[49];
+        for(int i = 0; i < 49; ++i) {
+            cases[i] = Case.EMPTY;
+        }
+        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
+                Collections.singletonList(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50)
+        );
+        ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
+
+        // WHEN
+        ValidityCheckersBoard validity = CheckersBoard.validate(cases);
+
+        // THEN
+        assertThat(validity).isEqualTo(expect);
+    }
+
+    @Test
+    public void validateReturnIsNotValidBecauseCasesContainsNull() {
+        // GIVEN
+        Case[] cases = new Case[50];
+        for(int i = 0; i < 50; ++i) {
+            cases[i] = Case.EMPTY;
+        }
+        cases[40] = null;
+
+        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
+                Collections.singletonList(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL)
+        );
+        ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
+
+        // WHEN
+        ValidityCheckersBoard validity = CheckersBoard.validate(cases);
+
+        // THEN
+        assertThat(validity).isEqualTo(expect);
+    }
+
+    @Test
+    public void validateReturnIsNotValidBecauseCasesLengthIsNotEqual50AndCasesContainsNull() {
+        // GIVEN
+        Case[] cases = new Case[49];
+        for(int i = 0; i < 49; ++i) {
+            cases[i] = Case.EMPTY;
+        }
+        cases[40] = null;
+        Set<ValidityErrorCheckersBoard> expectErrors = new HashSet<>(
+                Arrays.asList(
+                        ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50,
+                        ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL
+                )
+        );
+        ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
+
+        // WHEN
+        ValidityCheckersBoard validity = CheckersBoard.validate(cases);
+
+        // THEN
+        assertThat(validity).isEqualTo(expect);
     }
 }
