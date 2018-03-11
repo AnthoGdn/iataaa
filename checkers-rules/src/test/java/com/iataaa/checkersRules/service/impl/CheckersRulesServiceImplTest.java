@@ -2,24 +2,20 @@ package com.iataaa.checkersRules.service.impl;
 
 import com.iataaa.checkersRules.model.Case;
 import com.iataaa.checkersRules.model.CheckersBoard;
-import com.iataaa.checkersRules.model.EnumPlayer;
+import com.iataaa.checkersRules.model.Player;
+import com.iataaa.checkersRules.rules.CheckersCasesTool;
 import com.iataaa.checkersRules.rules.CheckersRules;
 import com.iataaa.checkersRules.service.CheckersRulesService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static com.iataaa.checkersRules.model.CheckersBoard.PIECE_SIZE;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(CheckersRules.class)
 public class CheckersRulesServiceImplTest {
 
     private CheckersRulesService checkersRulesService;
@@ -27,18 +23,6 @@ public class CheckersRulesServiceImplTest {
     @Before
     public void setUp() {
         checkersRulesService = new CheckersRulesServiceServiceImpl();
-    }
-
-    private CheckersBoard getBoard(Case... casesParam) {
-        Case[] cases = new Case[50];
-        for(int i = 0; i < 50; ++i) {
-            if (i >= casesParam.length) {
-                cases[i] = Case.EMPTY;
-            } else {
-                cases[i] = casesParam[i];
-            }
-        }
-        return new CheckersBoard(cases);
     }
 
     @Test
@@ -78,20 +62,56 @@ public class CheckersRulesServiceImplTest {
     @Test
     public void isValidMoveShouldReturnTrue() {
         // GIVEN
-        CheckersBoard board = getBoard(Case.BLACK_PIECE);
-        CheckersBoard moveBoard = getBoard(Case.EMPTY, Case.BLACK_PIECE);
-        CheckersBoard mockedBoardResult = getBoard(Case.EMPTY, Case.BLACK_PIECE);
+        String boardString =
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "9|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "8|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "7|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "6|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "5|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "4|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "3|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "2|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "1|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "0|   x   |       |       |       |       |       |       |       |       |       |\n" +
+            " |---0---|---1---|---2---|---3---|---4---|---5---|---6---|---7---|---8---|---9---|";
+        CheckersBoard board = CheckersBoard.stringToCheckersBoard(boardString);
 
-        List<Case[]> mockedCases = new ArrayList<Case[]>() {{
-            add(mockedBoardResult.getCases());
-        }};
-
-        mockStatic(CheckersRules.class);
-        when(CheckersRules.getAvailableMoves(board.getCases(), EnumPlayer.PLAYER_1))
-                .thenReturn(mockedCases);
+        String movedBoardString =
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "9|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "8|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "7|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "6|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "5|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "4|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "3|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "2|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "1|       |   x   |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "0|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |---0---|---1---|---2---|---3---|---4---|---5---|---6---|---7---|---8---|---9---|";
+        CheckersBoard movedBoard = CheckersBoard.stringToCheckersBoard(movedBoardString);
 
         // WHERE
-        boolean isValid = checkersRulesService.isValidMove(board, moveBoard, EnumPlayer.PLAYER_1);
+        boolean isValid = checkersRulesService.isValidMove(board, movedBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(isValid).isTrue();
@@ -100,20 +120,56 @@ public class CheckersRulesServiceImplTest {
     @Test
     public void isValidateMoveShouldReturnFalse() {
         // GIVEN
-        CheckersBoard board = getBoard(Case.BLACK_PIECE);
-        CheckersBoard moveBoard = getBoard();
-        CheckersBoard mockedBoardResult = getBoard(Case.EMPTY, Case.BLACK_PIECE);
+        String boardString =
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "9|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "8|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "7|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "6|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "5|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "4|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "3|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "2|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "1|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "0|   x   |       |       |       |       |       |       |       |       |       |\n" +
+            " |---0---|---1---|---2---|---3---|---4---|---5---|---6---|---7---|---8---|---9---|";
+        CheckersBoard board = CheckersBoard.stringToCheckersBoard(boardString);
 
-        List<Case[]> mockedCases = new ArrayList<Case[]>() {{
-            add(mockedBoardResult.getCases());
-        }};
-
-        mockStatic(CheckersRules.class);
-        when(CheckersRules.getAvailableMoves(board.getCases(), EnumPlayer.PLAYER_1))
-                .thenReturn(mockedCases);
+        String movedBoardString =
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "9|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "8|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "7|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "6|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "5|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "4|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "3|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "2|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "1|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+            "0|       |       |       |       |       |       |       |       |       |       |\n" +
+            " |---0---|---1---|---2---|---3---|---4---|---5---|---6---|---7---|---8---|---9---|";
+        CheckersBoard movedBoard = CheckersBoard.stringToCheckersBoard(movedBoardString);
 
         // WHERE
-        boolean isValid = checkersRulesService.isValidMove(board, moveBoard, EnumPlayer.PLAYER_1);
+        boolean isValid = checkersRulesService.isValidMove(board, movedBoard, Player.PLAYER_1);
 
         // THEN
         assertThat(isValid).isFalse();
@@ -122,21 +178,47 @@ public class CheckersRulesServiceImplTest {
     @Test
     public void getAvailableMovesTest() {
         // GIVEN
-        CheckersBoard board = getBoard(Case.BLACK_PIECE);
-        CheckersBoard mockedBoardResult = getBoard(Case.EMPTY, Case.BLACK_PIECE);
+        String boardString =
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "9|       |   o   |       |   o   |       |   o   |       |   o   |       |   o   |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "8|   o   |       |   o   |       |   o   |       |   o   |       |   o   |       |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "7|       |   o   |       |   o   |       |   o   |       |   o   |       |   o   |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "6|   o   |       |   o   |       |   o   |       |   o   |       |   o   |       |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "5|       |       |       |       |       |       |       |       |       |       |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "4|       |       |       |       |       |       |       |       |       |       |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "3|       |   x   |       |   x   |       |   x   |       |   x   |       |   x   |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "2|   x   |       |   x   |       |   x   |       |   x   |       |   x   |       |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "1|       |   x   |       |   x   |       |   x   |       |   x   |       |   x   |\n" +
+                " |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|\n" +
+                "0|   x   |       |   x   |       |   x   |       |   x   |       |   x   |       |\n" +
+                " |---0---|---1---|---2---|---3---|---4---|---5---|---6---|---7---|---8---|---9---|";
+        CheckersBoard checkersBoard = CheckersBoard.stringToCheckersBoard(boardString);
+        Case[] board = checkersBoard.getCases();
 
-        List<Case[]> mockedCases = new ArrayList<Case[]>() {{
-                add(mockedBoardResult.getCases());
-        }};
-
-        mockStatic(CheckersRules.class);
-        when(CheckersRules.getAvailableMoves(board.getCases(), EnumPlayer.PLAYER_1))
-                .thenReturn(mockedCases);
+        List<CheckersBoard> expected = Arrays.asList(
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 15, 20)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 15, 21)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 16, 21)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 16, 22)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 17, 22)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 17, 23)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 18, 23)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 18, 24)),
+                new CheckersBoard(CheckersCasesTool.moveCaseFrom(board, 19, 24))
+        );
 
         // WHERE
-        List<CheckersBoard> result = checkersRulesService.getAvailableMoves(board, EnumPlayer.PLAYER_1);
+        List<CheckersBoard> result = checkersRulesService.getAvailableMoves(checkersBoard, Player.PLAYER_1);
 
         // THEN
-        assertThat(result).containsExactly(mockedBoardResult);
+        assertThat(result).containsOnlyElementsOf(expected);
     }
 }
