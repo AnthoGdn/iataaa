@@ -9,16 +9,16 @@ import java.util.UUID;
 @Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
 abstract class AbstractEntity implements Entity {
     @Id
-    private String id;
+    private UUID id;
 
     AbstractEntity() {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 }

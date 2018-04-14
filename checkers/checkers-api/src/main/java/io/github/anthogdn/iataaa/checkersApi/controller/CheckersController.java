@@ -28,7 +28,6 @@ public class CheckersController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedCheckersReadDto create(@RequestBody @Valid CheckersCreateDto checkersCreateDto) {
-        LOGGER.debug("HTTP request to create checkers with : {}", checkersCreateDto);
         return checkersEntityService.create(checkersCreateDto);
     }
 

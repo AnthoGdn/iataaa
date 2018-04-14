@@ -40,4 +40,13 @@ public class PlayerEntity extends AbstractEntity implements Entity {
     public void setToken(String token) {
         this.token = token;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerEntity{" +
+                "name='" + name + '\'' +
+                ", playerNb=" + playerNb +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

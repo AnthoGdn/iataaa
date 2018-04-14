@@ -22,7 +22,7 @@ public class CheckersBoardMapper {
     public static CheckersBoard stringToCheckersBoard(String checkersBoardString) {
         Case[] cases = checkersBoardString
                 .chars()
-                .mapToObj(c -> String.valueOf((char) c))
+                .mapToObj(caseChar -> String.valueOf((char) caseChar))
                 .map(Case::stringToCase)
                 .toArray(Case[]::new);
         return new CheckersBoard(cases);
@@ -32,8 +32,8 @@ public class CheckersBoardMapper {
         CheckersBoardDto checkersBoardDto = new CheckersBoardDto();
         CaseDto[] caseDtos = checkersBoardString
                 .chars()
-                .mapToObj(c -> String.valueOf((char) c))
-                .map(CaseMapper::stringToCaseDto)
+                .mapToObj(caseChar -> String.valueOf((char) caseChar))
+                .map(CaseDto::stringToCaseDto)
                 .toArray(CaseDto[]::new);
         checkersBoardDto.setCases(caseDtos);
 

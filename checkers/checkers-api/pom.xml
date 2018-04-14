@@ -10,7 +10,6 @@
         <groupId>io.github.anthogdn.iataaa</groupId>
         <artifactId>checkers</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>checkers-api</artifactId>
@@ -20,11 +19,8 @@
     <inceptionYear>2018</inceptionYear>
 
     <properties>
-        <hsqldb.version>2.4.0</hsqldb.version>
-        <mysql.version>5.1.45</mysql.version>
         <jaxb.version>2.3.0</jaxb.version>
         <orika-core.version>1.4.2</orika-core.version>
-        <sfl4j.version>1.7.25</sfl4j.version>
         <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
     </properties>
 

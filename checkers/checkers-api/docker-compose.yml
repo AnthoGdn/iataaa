@@ -5,8 +5,6 @@ networks:
     driver: bridge
     ipam:
       driver: default
-      config:
-      - subnet: 172.16.0.0/24
 
 services:
   checkers-api-db:

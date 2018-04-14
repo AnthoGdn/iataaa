@@ -14,6 +14,6 @@ public class AbstractEntityTest {
         Entity entity = new Entity();
 
         // THEN
-        assertThat(entity.getId()).isNotEmpty();
+        assertThat(entity.getId()).isNotNull();
     }
 }

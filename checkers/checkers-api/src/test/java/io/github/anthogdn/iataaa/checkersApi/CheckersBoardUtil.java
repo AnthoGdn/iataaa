@@ -11,6 +11,9 @@ public class CheckersBoardUtil {
     public static final String INITIAL_CHECKERS_BOARD_STRING = "xxxxxxxxxxxxxxxxxxxx          oooooooooooooooooooo";
     public static final String MIXED_CHECKERS_BOARD_STRING = "ooooooooooOOOOOOOOOOxxxxxxxxxxXXXXXXXXXX          ";
 
+    private CheckersBoardUtil() {
+    }
+
     public static CheckersBoard getInitialCheckersBoard() {
         CheckersService checkersService = new CheckersServiceImpl();
         return checkersService.getInitializedCheckers().getCheckersBoard();

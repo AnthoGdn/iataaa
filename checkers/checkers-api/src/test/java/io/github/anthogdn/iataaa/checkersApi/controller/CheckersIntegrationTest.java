@@ -26,7 +26,7 @@ public class CheckersIntegrationTest {
     private CheckersController controller;
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Test
     public void createCheckersGoodParametersShouldReturnIsCreated() {
@@ -75,7 +75,7 @@ public class CheckersIntegrationTest {
             String checkersName,
             String playerName
     ) {
-        assertThat(checkersEntity.getId()).isNotEmpty();
+        assertThat(checkersEntity.getId()).isNotNull();
         assertThat(checkersEntity.getPlayer()).isNotNull();
         assertThat(checkersEntity.getWinner()).isNull();
 

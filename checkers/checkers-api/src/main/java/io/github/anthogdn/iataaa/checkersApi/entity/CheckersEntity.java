@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @javax.persistence.Entity
-public class CheckersEntity extends AbstractEntity implements Entity {
+public class CheckersEntity extends AbstractEntity {
     @NotNull
     @Size(min=1)
     private String name;
@@ -52,5 +52,16 @@ public class CheckersEntity extends AbstractEntity implements Entity {
     }
     public void setWinner(PlayerNbEntity winner) {
         this.winner = winner;
+    }
+
+    @Override
+    public String toString() {
+        return "CheckersEntity{" +
+                "name='" + name + '\'' +
+                ", board='" + board + '\'' +
+                ", player=" + player +
+                ", turnPlayer=" + turnPlayer +
+                ", winner=" + winner +
+                '}';
     }
 }

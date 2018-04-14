@@ -12,7 +12,7 @@ public class PlayerEntityTest {
         PlayerEntity playerEntity = new PlayerEntity();
 
         // THEN
-        assertThat(playerEntity.getId()).isNotEmpty();
+        assertThat(playerEntity.getId()).isNotNull();
         assertThat(playerEntity.getToken()).isNotEmpty();
     }
 }
