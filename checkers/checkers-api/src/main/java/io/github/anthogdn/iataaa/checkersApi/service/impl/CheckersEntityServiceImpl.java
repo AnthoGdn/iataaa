@@ -29,15 +29,14 @@ public class CheckersEntityServiceImpl implements CheckersEntityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckersEntityServiceImpl.class);
 
-    private CheckersService checkersService;
-    private CheckersRepository checkersRepository;
-    private PlayerRepository playerRepository;
+    private final CheckersService checkersService;
+    private final CheckersRepository checkersRepository;
+    private final PlayerRepository playerRepository;
 
     public CheckersEntityServiceImpl(
-            @Autowired CheckersRepository checkersRepository,
-            @Autowired PlayerRepository playerRepository
+            CheckersRepository checkersRepository,
+            PlayerRepository playerRepository
     ) {
-        super();
         checkersService = new CheckersServiceImpl();
         this.checkersRepository = checkersRepository;
         this.playerRepository = playerRepository;
@@ -54,30 +53,25 @@ public class CheckersEntityServiceImpl implements CheckersEntityService {
         checkersEntity.setPlayer(playerEntity);
 
         playerRepository.save(checkersEntity.getPlayer());
-        LOGGER.info("create player entity: {}", checkersEntity);
+        LOGGER.info("Create player entity: {}", checkersEntity);
         checkersEntity = checkersRepository.save(checkersEntity);
-        LOGGER.info("create checkers entity: {}", checkersEntity);
+        LOGGER.info("Create checkers entity: {}", checkersEntity);
         return CheckersMapper.checkersEntityToCreatedCheckersReadDto(checkersEntity);
     }
 
     public Page<CheckersReadDto> getAll(PageParams pageParams) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet");
     }
 
     public CheckersReadDto getById(String id) throws NotFoundException {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet");
     }
 
     public CheckersReadDto play(String id, CheckersMoveWriteDto move) {
-        /*
-        * J'utilise CheckersBoardService.
-        * Je donne à la methode play les parametres : checkers board, le joueur qui doit jouer
-        * Je recoit une liste de Checkers possibles
-        * */
-        return null;
+        throw new UnsupportedOperationException("Not supported yet");
     }
 
     public CheckersReadDto surrender(String id, TokenDto tokenDto) throws NotFoundException {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet");
     }
 }

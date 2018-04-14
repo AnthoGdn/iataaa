@@ -20,11 +20,11 @@ public class PlayerNbMapper {
         }
     }
 
-    public static PlayerNbEntity playerNbDtoToPlayerNbEntity(PlayerNbDto playerNbDtoDto) {
-        if (playerNbDtoDto == null) {
+    public static PlayerNbEntity playerNbDtoToPlayerNbEntity(PlayerNbDto playerNbDto) {
+        if (playerNbDto == null) {
             return null;
         }
-        switch (playerNbDtoDto) {
+        switch (playerNbDto) {
             case PLAYER_1: return PlayerNbEntity.PLAYER_1;
             case PLAYER_2: return PlayerNbEntity.PLAYER_2;
             default: throw new IllegalArgumentException();

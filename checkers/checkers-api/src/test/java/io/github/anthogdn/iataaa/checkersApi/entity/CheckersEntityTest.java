@@ -12,6 +12,6 @@ public class CheckersEntityTest {
         CheckersEntity checkersEntity = new CheckersEntity();
 
         // THEN
-        assertThat(checkersEntity.getId()).isNotEmpty();
+        assertThat(checkersEntity.getId()).isNotNull();
     }
 }

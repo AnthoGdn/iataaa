@@ -11,6 +11,8 @@ import io.github.anthogdn.iataaa.checkersDto.entity.read.CreatedCheckersReadDto;
 import io.github.anthogdn.iataaa.checkersDto.type.PlayerNbDto;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +23,7 @@ public class CheckersMapperTest {
         // GIVEN
         String checkersName = "game";
         String playerName = "ivana";
-        String checkerId = "fba5d758-1a82-4ddc-bde3-2978a16f554f";
+        UUID checkerId = UUID.randomUUID();
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setPlayerNb(PlayerNbMapper.playerNbDtoToPlayerNbEntity(PlayerNbDto.PLAYER_2));
         playerEntity.setName(playerName);
