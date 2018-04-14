@@ -4,13 +4,10 @@ IAtaaa Server is web platform to manage artificial intelligence game. The name I
 
 ## Getting Started
 ### Requirements
-* Docker
+* Java 9
 * Docker-Compose
 
 **Indication**: Use `./mvnw` command instead of `mvn` if you haven't Maven.
-
-### Requirements
-* Java 9
 
 ### Maven Module
 * checkers-domain : implementation of checkers rules
