@@ -40,17 +40,17 @@ public class CheckersBoard {
     }
 
     public static ValidityCheckersBoard validate(Case[] cases) {
-        Set<ValidityErrorCheckersBoard> errors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
+        Set<ValidityErrorsCheckersBoard> errors = EnumSet.noneOf(ValidityErrorsCheckersBoard.class);
         if (cases == null) {
-            errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_IS_NULL);
-            errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
-            errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
+            errors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_IS_NULL);
+            errors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
+            errors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
         } else {
             if (cases.length != PIECE_SIZE) {
-                errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
+                errors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
             }
             if (Arrays.stream(cases).anyMatch(Objects::isNull)) {
-                errors.add(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
+                errors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
             }
         }
 

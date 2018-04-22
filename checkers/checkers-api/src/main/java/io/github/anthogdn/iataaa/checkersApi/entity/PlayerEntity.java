@@ -11,6 +11,12 @@ public class PlayerEntity extends AbstractEntity implements Entity {
         this.token = UUID.randomUUID().toString();
     }
 
+    public PlayerEntity(String name, PlayerNbEntity playerNbEntity) {
+        this();
+        this.name = name;
+        this.playerNb = playerNbEntity;
+    }
+
     @NotNull
     @Size(min=1)
     private String name;

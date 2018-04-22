@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CheckersBoardMapperTest {
 
     @Test
-    public void initialCheckersBoardToStringTest() {
+    public void initialCheckersBoardToString_Test() {
         // WHEN
         String checkersString = CheckersBoardMapper.checkersBoardToString(getInitialCheckersBoard());
 
@@ -19,7 +19,7 @@ public class CheckersBoardMapperTest {
     }
 
     @Test
-    public void mixedCheckersBoardToStringTest() {
+    public void mixedCheckersBoardToString_Test() {
         // WHEN
         String checkersString = CheckersBoardMapper.checkersBoardToString(getMixedCheckersBoard());
 
@@ -28,7 +28,7 @@ public class CheckersBoardMapperTest {
     }
 
     @Test
-    public void initialCheckersBoardStringToCheckersBoardTest() {
+    public void initialCheckersBoardStringToCheckersBoard_Test() {
         // WHEN
         CheckersBoard checkersBoard = CheckersBoardMapper.stringToCheckersBoard(INITIAL_CHECKERS_BOARD_STRING);
 
@@ -37,7 +37,7 @@ public class CheckersBoardMapperTest {
     }
 
     @Test
-    public void mixedCheckersBoardStringToCheckersBoardTest() {
+    public void mixedCheckersBoardStringToCheckersBoard_Test() {
         // WHEN
         CheckersBoard checkersBoard = CheckersBoardMapper.stringToCheckersBoard(MIXED_CHECKERS_BOARD_STRING);
 
@@ -46,11 +46,35 @@ public class CheckersBoardMapperTest {
     }
 
     @Test
-    public void mixedCheckersBoardStringToCheckersBoardDtoTest() {
+    public void mixedCheckersBoardStringToCheckersBoardDto_Test() {
         // WHEN
         CheckersBoardDto checkersBoardDto = CheckersBoardMapper.stringToCheckersBoardDto(MIXED_CHECKERS_BOARD_STRING);
 
         // THEN
         assertThat(checkersBoardDto).isEqualTo(getMixedCheckersBoardDto());
+    }
+
+    @Test
+    public void checkersBoardDtoToCheckersBoard_Test_WithInitialBoard() {
+        // WHEN
+        CheckersBoardDto checkersBoardDto = getInitialCheckersBoardDto();
+
+        // WHEN
+        CheckersBoard checkersBoard = CheckersBoardMapper.checkersBoardDtoToCheckersBoard(checkersBoardDto);
+
+        // THEN
+        assertThat(checkersBoard).isEqualTo(getInitialCheckersBoard());
+    }
+
+    @Test
+    public void checkersBoardDtoToCheckersBoard_Test_WithMixedBoard() {
+        // WHEN
+        CheckersBoardDto checkersBoardDto = getMixedCheckersBoardDto();
+
+        // WHEN
+        CheckersBoard checkersBoard = CheckersBoardMapper.checkersBoardDtoToCheckersBoard(checkersBoardDto);
+
+        // THEN
+        assertThat(checkersBoard).isEqualTo(getMixedCheckersBoard());
     }
 }

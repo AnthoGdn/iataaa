@@ -28,7 +28,7 @@ public class PlayerNbMapperTest {
     }
 
     @Test
-    public void playerNbDtoToPlayerNbShouldReturnPLAYER_1Test() {
+    public void playerNbDtoToPlayerNbEntityShouldReturnPLAYER_1Test() {
         // WHEN
         PlayerNbEntity playerNbEntityDto = PlayerNbMapper.playerNbDtoToPlayerNbEntity(PlayerNbDto.PLAYER_1);
 
@@ -37,7 +37,7 @@ public class PlayerNbMapperTest {
     }
 
     @Test
-    public void playerNbDtoToPlayerNbShouldReturnPLAYER_2Test() {
+    public void playerNbDtoToPlayerNbEntityShouldReturnPLAYER_2Test() {
         // WHEN
         PlayerNbEntity playerNbEntityDto = PlayerNbMapper.playerNbDtoToPlayerNbEntity(PlayerNbDto.PLAYER_2);
 
@@ -61,5 +61,41 @@ public class PlayerNbMapperTest {
 
         // THEN
         assertThat(playerNbEntityDto).isEqualTo(PlayerNbEntity.PLAYER_2);
+    }
+
+    @Test
+    public void playerNbDtoToPlayerNbShouldReturnPLAYER_1Test() {
+        // WHEN
+        PlayerNb playerNb = PlayerNbMapper.playerNbDtoToPlayerNb(PlayerNbDto.PLAYER_1);
+
+        // THEN
+        assertThat(playerNb).isEqualTo(PlayerNb.PLAYER_1);
+    }
+
+    @Test
+    public void playerNbDtoToPlayerNbShouldReturnPLAYER_2Test() {
+        // WHEN
+        PlayerNb playerNb = PlayerNbMapper.playerNbDtoToPlayerNb(PlayerNbDto.PLAYER_2);
+
+        // THEN
+        assertThat(playerNb).isEqualTo(PlayerNb.PLAYER_2);
+    }
+
+    @Test
+    public void playerNbEntityToPlayerNbShouldReturnPLAYER_1Test() {
+        // WHEN
+        PlayerNb playerNb = PlayerNbMapper.playerNbEntityToPlayerNb(PlayerNbEntity.PLAYER_1);
+
+        // THEN
+        assertThat(playerNb).isEqualTo(PlayerNb.PLAYER_1);
+    }
+
+    @Test
+    public void playerNbEntityToPlayerNbShouldReturnPLAYER_2Test() {
+        // WHEN
+        PlayerNb playerNb = PlayerNbMapper.playerNbEntityToPlayerNb(PlayerNbEntity.PLAYER_2);
+
+        // THEN
+        assertThat(playerNb).isEqualTo(PlayerNb.PLAYER_2);
     }
 }
