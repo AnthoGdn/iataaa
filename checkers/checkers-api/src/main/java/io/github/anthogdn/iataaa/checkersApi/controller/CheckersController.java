@@ -1,23 +1,23 @@
 package io.github.anthogdn.iataaa.checkersApi.controller;
 
+import io.github.anthogdn.iataaa.checkersApi.exception.NotAuthorizedException;
 import io.github.anthogdn.iataaa.checkersApi.service.CheckersEntityService;
+import io.github.anthogdn.iataaa.checkersDto.entity.read.CheckersReadDto;
 import io.github.anthogdn.iataaa.checkersDto.entity.read.CreatedCheckersReadDto;
 import io.github.anthogdn.iataaa.checkersDto.entity.write.CheckersCreateDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.github.anthogdn.iataaa.checkersDto.entity.write.CheckersMoveWriteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 import static io.github.anthogdn.iataaa.checkersApi.Path.API_PATH;
 
 @RestController
 @RequestMapping(API_PATH + "/checkers")
 public class CheckersController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckersController.class);
 
     private CheckersEntityService checkersEntityService;
 
@@ -39,19 +39,22 @@ public class CheckersController {
 //
 //    @GetMapping(value = "/{id}")
 //    @ResponseStatus(HttpStatus.OK)
-//    public CheckersReadDto getById(@PathVariable("id") String id) throws NotFoundException {
+//    public CheckersReadDto getById(@PathVariable("id") UUID id) throws NotFoundException {
 //        return null;
 //    }
-//
-//    @PutMapping(value = "/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public CheckersReadDto play(@PathVariable("id") String id, @Valid CheckersMoveWriteDto move) {
-//        return null;
-//    }
-//
+
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CheckersReadDto play(
+            @PathVariable("id") UUID id,
+            @RequestBody @Valid CheckersMoveWriteDto move
+    ) throws NotAuthorizedException {
+        return checkersEntityService.play(id, move);
+    }
+
 //    @PutMapping(value = "/surrender/{id}")
 //    @ResponseStatus(HttpStatus.OK)
-//    public CheckersReadDto surrender(@PathVariable("id") String id, @Valid TokenDto token) throws NotFoundException {
+//    public CheckersReadDto surrender(@PathVariable("id") UUID id, @Valid TokenDto token) throws NotFoundException {
 //        return null;
 //    }
 }

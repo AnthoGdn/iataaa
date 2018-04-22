@@ -159,9 +159,9 @@ public class CheckersBoardTest {
     @Test
     public void validateReturnIsNotValidBecauseCasesIsNull() {
         // GIVEN
-        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.allOf(ValidityErrorCheckersBoard.class);
+        Set<ValidityErrorsCheckersBoard> expectErrors = EnumSet.allOf(ValidityErrorsCheckersBoard.class);
         expectErrors.addAll(
-                Arrays.asList(ValidityErrorCheckersBoard.values())
+                Arrays.asList(ValidityErrorsCheckersBoard.values())
         );
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
 
@@ -179,8 +179,8 @@ public class CheckersBoardTest {
         for(int i = 0; i < 49; ++i) {
             cases[i] = Case.EMPTY;
         }
-        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
-        expectErrors.add(ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
+        Set<ValidityErrorsCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorsCheckersBoard.class);
+        expectErrors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50);
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
 
         // WHEN
@@ -199,8 +199,8 @@ public class CheckersBoardTest {
         }
         cases[40] = null;
 
-        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
-        expectErrors.add(ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
+        Set<ValidityErrorsCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorsCheckersBoard.class);
+        expectErrors.add(ValidityErrorsCheckersBoard.CASES_ARRAY_CONTAINS_NULL);
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);
 
         // WHEN
@@ -218,11 +218,11 @@ public class CheckersBoardTest {
             cases[i] = Case.EMPTY;
         }
         cases[40] = null;
-        Set<ValidityErrorCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorCheckersBoard.class);
+        Set<ValidityErrorsCheckersBoard> expectErrors = EnumSet.noneOf(ValidityErrorsCheckersBoard.class);
         expectErrors.addAll(
                 Arrays.asList(
-                        ValidityErrorCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50,
-                        ValidityErrorCheckersBoard.CASES_ARRAY_CONTAINS_NULL
+                        ValidityErrorsCheckersBoard.CASES_ARRAY_LENGTH_NOT_EQUAL_50,
+                        ValidityErrorsCheckersBoard.CASES_ARRAY_CONTAINS_NULL
                 )
         );
         ValidityCheckersBoard expect = new ValidityCheckersBoard(expectErrors);

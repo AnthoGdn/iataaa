@@ -57,6 +57,7 @@ public class CheckersEntity extends AbstractEntity {
     @Override
     public String toString() {
         return "CheckersEntity{" +
+                "id='" + getId() + '\'' +
                 "name='" + name + '\'' +
                 ", board='" + board + '\'' +
                 ", player=" + player +

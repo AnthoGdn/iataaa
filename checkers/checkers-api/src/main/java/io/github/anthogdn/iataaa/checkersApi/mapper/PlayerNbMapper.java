@@ -41,4 +41,26 @@ public class PlayerNbMapper {
             default: throw new IllegalArgumentException();
         }
     }
+
+    public static PlayerNb playerNbDtoToPlayerNb(PlayerNbDto playerNbDto) {
+        if (playerNbDto == null) {
+            return null;
+        }
+        switch (playerNbDto) {
+            case PLAYER_1: return PlayerNb.PLAYER_1;
+            case PLAYER_2: return PlayerNb.PLAYER_2;
+            default: throw new IllegalArgumentException();
+        }
+    }
+
+    public static PlayerNb playerNbEntityToPlayerNb(PlayerNbEntity playerNbEntity) {
+        if (playerNbEntity == null) {
+            return null;
+        }
+        switch (playerNbEntity) {
+            case PLAYER_1: return PlayerNb.PLAYER_1;
+            case PLAYER_2: return PlayerNb.PLAYER_2;
+            default: throw new IllegalArgumentException();
+        }
+    }
 }

@@ -30,7 +30,7 @@ mvn clean test
 #### To work on checkers api
 To run database in docker container :
 ```sh
-cd checkers-api
+cd checkers/checkers-api
 docker-compose up -d
 ```
 To run checkers API, you should add environment variable :
@@ -44,13 +44,18 @@ DB_USER | iataaa |
 DB_PASSWORD | password |
 
 For example, you can run checkers API like that:
-```sh
-mvn spring-boot:run -DDB_IP=172.16.0.15 -DDB_PORT=3306 -DDB_DATABASE=iataaa -DDB_USER=iataaa -DDB_PASSWORD=password
+```
+mvn clean package
+java -jar -DDB_IP=172.16.0.15 -DDB_PORT=3306 -DDB_DATABASE=iataaa -DDB_USER=iataaa -DDB_PASSWORD=password ./checkers/checkers-api/target/checkers-api-0.1.0-SNAPSHOT.jar
 ```
 http://localhost:8080 is base url of API
 
-#### Swagger documentation
+#### Documentation
+##### Swagger documentation
 The api documentation accessible at http://localhost:8080/swagger-ui.html
+
+##### Insomnia
+You can load `checkers/checkers-api/insomnia_iataaa.json` to test manually checkers-api or copy request payload.
 
 
 ## Contributor

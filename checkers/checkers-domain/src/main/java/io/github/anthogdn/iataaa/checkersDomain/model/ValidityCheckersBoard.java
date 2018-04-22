@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class ValidityCheckersBoard {
     private boolean isValid;
-    private Set<ValidityErrorCheckersBoard> errors;
+    private Set<ValidityErrorsCheckersBoard> errors;
 
     public ValidityCheckersBoard() {
         isValid = true;
     }
 
-    public ValidityCheckersBoard(Set<ValidityErrorCheckersBoard> errors) {
+    public ValidityCheckersBoard(Set<ValidityErrorsCheckersBoard> errors) {
         this.isValid = false;
         this.errors = errors;
     }
@@ -42,11 +42,11 @@ public class ValidityCheckersBoard {
         isValid = valid;
     }
 
-    public Set<ValidityErrorCheckersBoard> getErrors() {
+    public Set<ValidityErrorsCheckersBoard> getErrors() {
         return errors;
     }
 
-    public void setErrors(Set<ValidityErrorCheckersBoard> errors) {
+    public void setErrors(Set<ValidityErrorsCheckersBoard> errors) {
         this.errors = errors;
     }
 }
