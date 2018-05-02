@@ -20,7 +20,6 @@
 
     <properties>
         <jaxb.version>2.3.0</jaxb.version>
-        <orika-core.version>1.4.2</orika-core.version>
         <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
     </properties>
 
@@ -79,18 +78,12 @@
 
         <!-- IATAAA LIBRARIES -->
         <dependency>
-            <groupId>io.github.anthogdn.iataaa</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>checkers-dto</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../checkers-dto/target/checkers-dto-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>io.github.anthogdn.iataaa</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>checkers-domain</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../checkers-domain/target/checkers-domain-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 

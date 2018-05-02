@@ -39,4 +39,24 @@ public class CheckersMapper {
 
         return checkersEntity;
     }
+
+    public static Checkers checkersEntityToCheckers(CheckersEntity checkersEntity) {
+        return new Checkers(
+                CheckersBoardMapper.stringToCheckersBoard(checkersEntity.getBoard()),
+                PlayerNbMapper.playerNbEntityToPlayerNb(checkersEntity.getTurnPlayer()),
+                PlayerNbMapper.playerNbEntityToPlayerNb(checkersEntity.getWinner())
+        );
+    }
+
+    public static CheckersReadDto checkersEntityToCheckersReadDto(CheckersEntity checkersEntity) {
+        CheckersReadDto checkersReadDto = new CheckersReadDto();
+        checkersReadDto.setId(checkersEntity.getId());
+        checkersReadDto.setName(checkersEntity.getName());
+        checkersReadDto.setTurnPlayer(PlayerNbMapper.playerNbEntityToPlayerNbDto(checkersEntity.getTurnPlayer()));
+        checkersReadDto.setWinner(PlayerNbMapper.playerNbEntityToPlayerNbDto(checkersEntity.getWinner()));
+        checkersReadDto.setBoard(CheckersBoardMapper.stringToCheckersBoardDto(checkersEntity.getBoard()));
+        checkersReadDto.setPlayer(PlayerMapper.playerEntityToPlayerReadDto(checkersEntity.getPlayer()));
+
+        return checkersReadDto;
+    }
 }

@@ -12,7 +12,7 @@ public class NotFoundException extends EntityNotFoundException implements RestEx
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Error.class);
 
-    public NotFoundException(String propertyName, String propertyValue, String entityName) {
+    public NotFoundException(String entityName, String propertyValue, String propertyName) {
         super(entityName + " entity with " + propertyValue + " " + propertyName + " is not found");
         LOGGER.info("{} entity with {} {} is not found", entityName, propertyValue, propertyName);
     }

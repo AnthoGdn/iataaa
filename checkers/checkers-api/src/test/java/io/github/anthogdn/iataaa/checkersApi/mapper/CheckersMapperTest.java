@@ -7,6 +7,7 @@ import io.github.anthogdn.iataaa.checkersApi.entity.PlayerNbEntity;
 import io.github.anthogdn.iataaa.checkersDomain.model.Checkers;
 import io.github.anthogdn.iataaa.checkersDomain.model.CheckersBoard;
 import io.github.anthogdn.iataaa.checkersDomain.model.PlayerNb;
+import io.github.anthogdn.iataaa.checkersDto.entity.read.CheckersReadDto;
 import io.github.anthogdn.iataaa.checkersDto.entity.read.CreatedCheckersReadDto;
 import io.github.anthogdn.iataaa.checkersDto.type.PlayerNbDto;
 import org.junit.Test;
@@ -17,6 +18,19 @@ import static io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckersMapperTest {
+
+    private CheckersEntity getInitialCheckersEntity(
+            String checkersName, String playerName, PlayerNbEntity playerNbEntity, String boardString
+    ) {
+        PlayerEntity playerEntity = new PlayerEntity(playerName, playerNbEntity);
+        CheckersEntity checkersEntity = new CheckersEntity();
+        checkersEntity.setName(checkersName);
+        checkersEntity.setPlayer(playerEntity);
+        checkersEntity.setTurnPlayer(playerNbEntity);
+        checkersEntity.setWinner(playerNbEntity);
+        checkersEntity.setBoard(boardString);
+        return checkersEntity;
+    }
 
     @Test
     public void checkersToCreatedCheckersReadDtoTest() {
@@ -71,4 +85,95 @@ public class CheckersMapperTest {
         assertThat(checkersEntity.getTurnPlayer()).isEqualTo(PlayerNbEntity.PLAYER_1);
         assertThat(checkersEntity.getWinner()).isEqualTo(PlayerNbEntity.PLAYER_2);
     }
+
+    @Test
+    public void checkersEntityToCheckers_Test_initialBoard() {
+        // GIVEN
+        String checkersName = "checkers";
+        String playerName = "player";
+        PlayerNbEntity playerNbEntity = PlayerNbEntity.PLAYER_1;
+
+        CheckersEntity checkersEntity = getInitialCheckersEntity(
+            checkersName, playerName, playerNbEntity, INITIAL_CHECKERS_BOARD_STRING
+        );
+
+        // WHEN
+        Checkers checkers = CheckersMapper.checkersEntityToCheckers(checkersEntity);
+
+        // THEN
+        assertThat(checkers.getTurnPlayer()).isEqualTo(PlayerNb.PLAYER_1);
+        assertThat(checkers.getWinner()).isEqualTo(PlayerNb.PLAYER_1);
+        assertThat(checkers.getCheckersBoard()).isEqualTo(getInitialCheckersBoard());
+    }
+
+    @Test
+    public void checkersEntityToCheckers_Test_mixedBoard() {
+        // GIVEN
+        String checkersName = "checkers";
+        String playerName = "player";
+        PlayerNbEntity playerNbEntity = PlayerNbEntity.PLAYER_2;
+
+        CheckersEntity checkersEntity = getInitialCheckersEntity(
+                checkersName, playerName, playerNbEntity, MIXED_CHECKERS_BOARD_STRING
+        );
+
+        // WHEN
+        Checkers checkers = CheckersMapper.checkersEntityToCheckers(checkersEntity);
+
+        // THEN
+        assertThat(checkers.getTurnPlayer()).isEqualTo(PlayerNb.PLAYER_2);
+        assertThat(checkers.getWinner()).isEqualTo(PlayerNb.PLAYER_2);
+        assertThat(checkers.getCheckersBoard()).isEqualTo(getMixedCheckersBoard());
+    }
+
+    @Test
+    public void checkersEntityToCheckersReadDto_Test_initialBoard() {
+        // GIVEN
+        String checkersName = "checkers";
+        String playerName = "player";
+        PlayerNbEntity playerNbEntity = PlayerNbEntity.PLAYER_1;
+
+        CheckersEntity checkersEntity = getInitialCheckersEntity(
+                checkersName, playerName, playerNbEntity, INITIAL_CHECKERS_BOARD_STRING
+        );
+
+        // WHEN
+        CheckersReadDto checkersReadDto = CheckersMapper.checkersEntityToCheckersReadDto(checkersEntity);
+
+        // THEN
+        assertThat(checkersReadDto.getId()).isEqualTo(checkersEntity.getId());
+        assertThat(checkersReadDto.getName()).isEqualTo(checkersName);
+        assertThat(checkersReadDto.getTurnPlayer()).isEqualTo(PlayerNbDto.PLAYER_1);
+        assertThat(checkersReadDto.getWinner()).isEqualTo(PlayerNbDto.PLAYER_1);
+        assertThat(checkersReadDto.getPlayer().getName()).isEqualTo(playerName);
+        assertThat(checkersReadDto.getPlayer().getPlayerNbDto()).isEqualTo(PlayerNbDto.PLAYER_1);
+        assertThat(checkersReadDto.getPlayer().getId()).isNotNull();
+        assertThat(checkersReadDto.getBoard()).isEqualTo(getInitialCheckersBoardDto());
+    }
+
+    @Test
+    public void checkersEntityToCheckersReadDto_Test_mixedBoard() {
+        // GIVEN
+        String checkersName = "checkers";
+        String playerName = "player";
+        PlayerNbEntity playerNbEntity = PlayerNbEntity.PLAYER_2;
+
+        CheckersEntity checkersEntity = getInitialCheckersEntity(
+                checkersName, playerName, playerNbEntity, MIXED_CHECKERS_BOARD_STRING
+        );
+
+        // WHEN
+        CheckersReadDto checkersReadDto = CheckersMapper.checkersEntityToCheckersReadDto(checkersEntity);
+
+        // THEN
+        assertThat(checkersReadDto.getId()).isEqualTo(checkersEntity.getId());
+        assertThat(checkersReadDto.getName()).isEqualTo(checkersName);
+        assertThat(checkersReadDto.getTurnPlayer()).isEqualTo(PlayerNbDto.PLAYER_2);
+        assertThat(checkersReadDto.getWinner()).isEqualTo(PlayerNbDto.PLAYER_2);
+        assertThat(checkersReadDto.getPlayer().getName()).isEqualTo(playerName);
+        assertThat(checkersReadDto.getPlayer().getPlayerNbDto()).isEqualTo(PlayerNbDto.PLAYER_2);
+        assertThat(checkersReadDto.getPlayer().getId()).isNotNull();
+        assertThat(checkersReadDto.getBoard()).isEqualTo(getMixedCheckersBoardDto());
+    }
+
 }
