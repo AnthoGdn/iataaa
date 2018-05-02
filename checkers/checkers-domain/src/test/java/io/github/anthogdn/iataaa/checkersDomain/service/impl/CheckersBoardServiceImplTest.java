@@ -1,6 +1,6 @@
 package io.github.anthogdn.iataaa.checkersDomain.service.impl;
 
-import io.github.anthogdn.iataaa.checkersDomain.CheckersCasesTool;
+import io.github.anthogdn.iataaa.checkersDomain.tools.CheckersCasesTool;
 import io.github.anthogdn.iataaa.checkersDomain.model.Case;
 import io.github.anthogdn.iataaa.checkersDomain.model.CheckersBoard;
 import io.github.anthogdn.iataaa.checkersDomain.model.PlayerNb;

@@ -9,6 +9,12 @@ public class BoardDto<T> implements Dto {
     @NotNull
     private T cases[];
 
+    public BoardDto() {
+    }
+    public BoardDto(T cases[]) {
+        this.cases = cases;
+    }
+
     public T[] getCases() {
         return cases;
     }

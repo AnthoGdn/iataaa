@@ -20,7 +20,7 @@ import org.junit.Test;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil.getInitialCheckersBoardDto;
+import static io.github.anthogdn.iataaa.checkersTestUtil.CheckersBoardUtil.getInitialCheckersBoardDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -69,7 +69,7 @@ public class CheckersEntityServiceImplTest {
     @Test
     public void playTest() throws NotAuthorizedException {
         // GIVEN
-        UUID checkersId = UUID.randomUUID();
+        String checkersId = UUID.randomUUID().toString();
         String checkersName = "checkers";
         String token = "token";
         String playerName = "playerName";
@@ -109,7 +109,7 @@ public class CheckersEntityServiceImplTest {
         // THEN
         assertThat(checkersReadDto).isNotNull();
         assertThat(checkersReadDto.getName()).isEqualTo(checkersName);
-        assertThat(checkersReadDto.getId()).isNotNull();
+        assertThat(checkersReadDto.getId().toString()).isNotNull();
         assertThat(checkersReadDto.getWinner()).isNull();
         assertThat(checkersReadDto.getPlayer().getName()).isEqualTo(playerName);
         assertThat(checkersReadDto.getPlayer().getPlayerNbDto()).isEqualTo(PlayerNbDto.PLAYER_1);
@@ -123,7 +123,7 @@ public class CheckersEntityServiceImplTest {
     @Test
     public void playTestShouldCatchExceptionBecauseTokenIsBad() {
         // GIVEN
-        UUID checkersId = UUID.randomUUID();
+        String checkersId = UUID.randomUUID().toString();
         String checkersName = "checkers";
         String token = "token";
         String playerName = "playerName";
@@ -170,7 +170,7 @@ public class CheckersEntityServiceImplTest {
     @Test
     public void playTestShouldCatchExceptionBecauseIsNotTurnPlayer() {
         // GIVEN
-        UUID checkersId = UUID.randomUUID();
+        String checkersId = UUID.randomUUID().toString();
         String checkersName = "checkers";
         String token = "token";
         String playerName = "playerName";
@@ -217,7 +217,7 @@ public class CheckersEntityServiceImplTest {
     @Test
     public void playTestShouldCatchExceptionBecauseBadMove() {
         // GIVEN
-        UUID checkersId = UUID.randomUUID();
+        String checkersId = UUID.randomUUID().toString();
         String checkersName = "checkers";
         String token = "token";
         String playerName = "playerName";

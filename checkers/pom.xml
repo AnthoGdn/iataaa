@@ -23,7 +23,10 @@
     <modules>
         <module>checkers-domain</module>
         <module>checkers-dto</module>
+        <module>checkers-test-util</module>
+        <module>checkers-domain-dto-mapper</module>
         <module>checkers-api</module>
+        <module>checkers-rules-api</module>
     </modules>
 
     <dependencyManagement>
@@ -36,6 +39,16 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>checkers-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>checkers-test-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>checkers-domain-dto-mapper</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

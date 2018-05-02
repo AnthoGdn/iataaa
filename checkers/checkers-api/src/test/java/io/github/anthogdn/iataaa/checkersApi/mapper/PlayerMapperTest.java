@@ -22,7 +22,7 @@ public class PlayerMapperTest {
 
         // THEN
         assertThat(playerReadDto).isNotNull();
-        assertThat(playerReadDto.getId()).isEqualTo(playerEntity.getId());
+        assertThat(playerReadDto.getId().toString()).isEqualTo(playerEntity.getId());
         assertThat(playerReadDto.getName()).isEqualTo("playerEntity");
         assertThat(playerReadDto.getPlayerNbDto()).isEqualTo(PlayerNbDto.PLAYER_2);
     }

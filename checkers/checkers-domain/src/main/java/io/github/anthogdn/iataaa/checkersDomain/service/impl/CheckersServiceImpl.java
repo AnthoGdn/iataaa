@@ -1,11 +1,13 @@
 package io.github.anthogdn.iataaa.checkersDomain.service.impl;
 
 import io.github.anthogdn.iataaa.checkersDomain.model.*;
+import io.github.anthogdn.iataaa.checkersDomain.move.CheckersBoardMove;
 import io.github.anthogdn.iataaa.checkersDomain.service.CheckersService;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class CheckersServiceImpl implements CheckersService {
 
@@ -13,6 +15,13 @@ public class CheckersServiceImpl implements CheckersService {
 
     public CheckersServiceImpl() {
         this.checkersBoardService = new CheckersBoardServiceImpl();
+    }
+
+    @Override
+    public Set<Move> getAvailableChainMoves(Checkers initialCheckers) {
+        return CheckersBoardMove.getAvailableChainMoves(
+            initialCheckers.getCheckersBoard().getCases(), initialCheckers.getTurnPlayer()
+        );
     }
 
     @Override

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: checkers-api
+  datasource:
+    url: jdbc:hsqldb:mem:iataaa
+  jpa:
+    properties:
+      dialect: org.hibernate.dialect.HSQLDialect
+      hbm2ddl:
+        auto: create-drop
+
