@@ -1,8 +1,8 @@
-FROM openjdk-9-jre
+FROM openjdk:9-jdk
 MAINTAINER Anthony Godin <gdn.anthony@gmail.com>
 
-ENV version
-ADD ./target/checkers-api-0.1.0-SNAPSHOT.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/checkers-api-${version}-SNAPSHOT.jar"]
+ENV VERSION 0.1.0
+ADD ./target/checkers-api-$VERSION-SNAPSHOT.jar /app/
+ENTRYPOINT java -jar "/app/checkers-api-$VERSION-SNAPSHOT.jar"
 
 EXPOSE 8080

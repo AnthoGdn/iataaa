@@ -7,12 +7,16 @@ IAtaaa Server is web platform to manage artificial intelligence game. The name I
 * Java 9
 * Docker-Compose
 
-**Indication**: Use `./mvnw` command instead of `mvn` if you haven't Maven.
+**Indication**: It's recommended to use `./mvnw` command instead of `mvn`.
 
-### Maven Module
+### Maven Modules
+These modules are located in `checkers` directory. 
 * checkers-domain : implementation of checkers rules
 * checkers-dto : contains Data Transfer Objects (DTO)
-* checkers-api : api to read and write checkers
+* checkers-domain-dto-mapper : library to map domain to dto and conversely
+* checkers-test-util : library contains test utils
+* checkers-api : api to read and write checkers (**contains README**)
+* checkers-rules-api : api to give possible chain moves (**contains README**)
 
 #### Build modules
 To build maven modules, run :
@@ -27,35 +31,24 @@ mvn clean test
 ```
 
 ### Develop mode
-#### To work on checkers api
-To run database in docker container :
+You can use docker-compose to run all api :
 ```sh
-cd checkers/checkers-api
 docker-compose up -d
 ```
-To run checkers API, you should add environment variable :
 
-Environment variable | Value
+Server | URL
 ------ | ------ 
-DB_IP | 172.16.0.15 |
-DB_PORT | 3306 |
-DB_DATABASE | iataaa |
-DB_USER | iataaa |
-DB_PASSWORD | password |
+checkers-api | 172.16.0.10:8080 |
+checkers-api database | 172.16.0.15:3036 |
+checkers-rules-api | 172.16.0.20:8080 |
 
-For example, you can run checkers API like that:
-```
-mvn clean package
-java -jar -DDB_IP=172.16.0.15 -DDB_PORT=3306 -DDB_DATABASE=iataaa -DDB_USER=iataaa -DDB_PASSWORD=password ./checkers/checkers-api/target/checkers-api-0.1.0-SNAPSHOT.jar
-```
-http://localhost:8080 is base url of API
+### Insomnia
+Insomnia is REST client. It's perfect to document all routes of api. 
+You can load `checkers/checkers-api/insomnia_iataaa.json` to test manually our api or to see request payload.
 
-#### Documentation
-##### Swagger documentation
-The api documentation accessible at http://localhost:8080/swagger-ui.html
-
-##### Insomnia
-You can load `checkers/checkers-api/insomnia_iataaa.json` to test manually checkers-api or copy request payload.
+**Warning**: You may need to redefine `ApiUrl` in environment variables of insomnia. This variable is url of api that you test.
+* If you use docker-compose, `ApiUrl` must be equal to `http://172.16.0.*:8080` (replace `*` by good number)
+* If you don't use docker-compose, you execute `.jar`, `ApiUrl` must be equal to `http://127.0.0.1:8080`
 
 
 ## Contributor

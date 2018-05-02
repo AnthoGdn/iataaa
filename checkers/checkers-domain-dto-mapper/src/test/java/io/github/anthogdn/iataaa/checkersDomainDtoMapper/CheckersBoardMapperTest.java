@@ -1,10 +1,10 @@
-package io.github.anthogdn.iataaa.checkersApi.mapper;
+package io.github.anthogdn.iataaa.checkersDomainDtoMapper;
 
 import io.github.anthogdn.iataaa.checkersDomain.model.CheckersBoard;
 import io.github.anthogdn.iataaa.checkersDto.entity.CheckersBoardDto;
 import org.junit.Test;
 
-import static io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil.*;
+import static io.github.anthogdn.iataaa.checkersTestUtil.CheckersBoardUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckersBoardMapperTest {

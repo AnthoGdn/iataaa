@@ -5,7 +5,7 @@ import io.github.anthogdn.iataaa.checkersApi.entity.PlayerEntity;
 import io.github.anthogdn.iataaa.checkersApi.exception.CodeException;
 import io.github.anthogdn.iataaa.checkersApi.exception.NotAuthorizedException;
 import io.github.anthogdn.iataaa.checkersApi.exception.NotFoundException;
-import io.github.anthogdn.iataaa.checkersApi.mapper.CheckersBoardMapper;
+import io.github.anthogdn.iataaa.checkersDomainDtoMapper.CheckersBoardMapper;
 import io.github.anthogdn.iataaa.checkersApi.mapper.CheckersMapper;
 import io.github.anthogdn.iataaa.checkersApi.mapper.CodeExceptionMapper;
 import io.github.anthogdn.iataaa.checkersApi.mapper.PlayerNbMapper;
@@ -29,8 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class CheckersEntityServiceImpl implements CheckersEntityService {
@@ -71,18 +69,18 @@ public class CheckersEntityServiceImpl implements CheckersEntityService {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
-    public CheckersReadDto getById(UUID id) throws NotFoundException {
+    public CheckersReadDto getById(String id) throws NotFoundException {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
     public CheckersReadDto play(
-            UUID id, CheckersMoveWriteDto moveBoardDto
+            String id, CheckersMoveWriteDto moveBoardDto
     ) throws NotAuthorizedException {
         CheckersEntity checkersEntity = playHuman(id, moveBoardDto);
         return playAi(checkersEntity);
     }
 
-    public CheckersReadDto surrender(UUID id, TokenDto tokenDto) throws NotFoundException {
+    public CheckersReadDto surrender(String id, TokenDto tokenDto) throws NotFoundException {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -106,7 +104,7 @@ public class CheckersEntityServiceImpl implements CheckersEntityService {
         return CheckersMapper.checkersEntityToCheckersReadDto(newCheckersEntity);
     }
 
-    private CheckersEntity playHuman(UUID id, CheckersMoveWriteDto moveBoardDto) throws NotAuthorizedException {
+    private CheckersEntity playHuman(String id, CheckersMoveWriteDto moveBoardDto) throws NotAuthorizedException {
         CheckersEntity checkersEntity = checkersRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("CheckersEntity", id.toString(), "id"));

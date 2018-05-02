@@ -1,6 +1,5 @@
 package io.github.anthogdn.iataaa.checkersApi.mapper;
 
-import io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil;
 import io.github.anthogdn.iataaa.checkersApi.entity.CheckersEntity;
 import io.github.anthogdn.iataaa.checkersApi.entity.PlayerEntity;
 import io.github.anthogdn.iataaa.checkersApi.entity.PlayerNbEntity;
@@ -14,7 +13,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import static io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil.*;
+import static io.github.anthogdn.iataaa.checkersTestUtil.CheckersBoardUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckersMapperTest {
@@ -37,7 +36,7 @@ public class CheckersMapperTest {
         // GIVEN
         String checkersName = "game";
         String playerName = "ivana";
-        UUID checkerId = UUID.randomUUID();
+        String checkerId = UUID.randomUUID().toString();
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setPlayerNb(PlayerNbMapper.playerNbDtoToPlayerNbEntity(PlayerNbDto.PLAYER_2));
         playerEntity.setName(playerName);
@@ -57,7 +56,7 @@ public class CheckersMapperTest {
         assertThat(createdCheckersReadDto).isNotNull();
         assertThat(createdCheckersReadDto.getToken()).isNotNull();
         assertThat(createdCheckersReadDto.getCheckersGame()).isNotNull();
-        assertThat(createdCheckersReadDto.getCheckersGame().getId()).isEqualTo(checkerId);
+        assertThat(createdCheckersReadDto.getCheckersGame().getId().toString()).isEqualTo(checkerId);
         assertThat(createdCheckersReadDto.getCheckersGame().getBoard()).isEqualTo(getMixedCheckersBoardDto());
         assertThat(createdCheckersReadDto.getCheckersGame().getName()).isEqualTo(checkersName);
         assertThat(createdCheckersReadDto.getCheckersGame().getPlayer().getPlayerNbDto()).isEqualTo(PlayerNbDto.PLAYER_2);
@@ -69,7 +68,7 @@ public class CheckersMapperTest {
     @Test
     public void checkersToCheckersEntityTest() {
         // GIVEN
-        CheckersBoard checkersBoard = CheckersBoardUtil.getInitialCheckersBoard();
+        CheckersBoard checkersBoard = getInitialCheckersBoard();
         Checkers checkers = new Checkers(checkersBoard, PlayerNb.PLAYER_1, PlayerNb.PLAYER_2);
 
         // WHEN
@@ -141,7 +140,7 @@ public class CheckersMapperTest {
         CheckersReadDto checkersReadDto = CheckersMapper.checkersEntityToCheckersReadDto(checkersEntity);
 
         // THEN
-        assertThat(checkersReadDto.getId()).isEqualTo(checkersEntity.getId());
+        assertThat(checkersReadDto.getId().toString()).isEqualTo(checkersEntity.getId());
         assertThat(checkersReadDto.getName()).isEqualTo(checkersName);
         assertThat(checkersReadDto.getTurnPlayer()).isEqualTo(PlayerNbDto.PLAYER_1);
         assertThat(checkersReadDto.getWinner()).isEqualTo(PlayerNbDto.PLAYER_1);
@@ -166,7 +165,7 @@ public class CheckersMapperTest {
         CheckersReadDto checkersReadDto = CheckersMapper.checkersEntityToCheckersReadDto(checkersEntity);
 
         // THEN
-        assertThat(checkersReadDto.getId()).isEqualTo(checkersEntity.getId());
+        assertThat(checkersReadDto.getId().toString()).isEqualTo(checkersEntity.getId());
         assertThat(checkersReadDto.getName()).isEqualTo(checkersName);
         assertThat(checkersReadDto.getTurnPlayer()).isEqualTo(PlayerNbDto.PLAYER_2);
         assertThat(checkersReadDto.getWinner()).isEqualTo(PlayerNbDto.PLAYER_2);

@@ -85,6 +85,14 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>checkers-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>checkers-test-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>checkers-domain-dto-mapper</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

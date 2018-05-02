@@ -1,4 +1,4 @@
-package io.github.anthogdn.iataaa.checkersApi;
+package io.github.anthogdn.iataaa.checkersTestUtil;
 
 import io.github.anthogdn.iataaa.checkersDomain.model.Case;
 import io.github.anthogdn.iataaa.checkersDomain.model.CheckersBoard;

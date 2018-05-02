@@ -1,4 +1,4 @@
-package io.github.anthogdn.iataaa.checkersDomain;
+package io.github.anthogdn.iataaa.checkersDomain.tools;
 
 import io.github.anthogdn.iataaa.checkersDomain.model.Case;
 

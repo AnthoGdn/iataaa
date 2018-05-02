@@ -1,4 +1,4 @@
-package io.github.anthogdn.iataaa.checkersApi.mapper;
+package io.github.anthogdn.iataaa.checkersDomainDtoMapper;
 
 import io.github.anthogdn.iataaa.checkersDomain.model.Case;
 import io.github.anthogdn.iataaa.checkersDomain.model.CheckersBoard;
@@ -42,19 +42,8 @@ public class CheckersBoardMapper {
 
     public static CheckersBoard checkersBoardDtoToCheckersBoard(CheckersBoardDto checkersBoardDto) {
         Case[] cases = Arrays.stream(checkersBoardDto.getCases())
-                .map(CheckersBoardMapper::caseDtoToCase)
+                .map(CaseMapper::caseDtoToCase)
                 .toArray(Case[]::new);
         return new CheckersBoard(cases);
-    }
-
-    private static Case caseDtoToCase(CaseDto caseDto) {
-        switch (caseDto) {
-            case EMPTY: return Case.EMPTY;
-            case BLACK_PIECE: return Case.BLACK_PIECE;
-            case BLACK_QUEEN: return Case.BLACK_QUEEN;
-            case WHITE_PIECE: return Case.WHITE_PIECE;
-            case WHITE_QUEEN: return Case.WHITE_QUEEN;
-            default: throw new IllegalArgumentException();
-        }
     }
 }

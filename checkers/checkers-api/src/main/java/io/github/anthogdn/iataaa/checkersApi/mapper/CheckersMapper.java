@@ -2,9 +2,12 @@ package io.github.anthogdn.iataaa.checkersApi.mapper;
 
 import io.github.anthogdn.iataaa.checkersApi.entity.CheckersEntity;
 import io.github.anthogdn.iataaa.checkersDomain.model.Checkers;
+import io.github.anthogdn.iataaa.checkersDomainDtoMapper.CheckersBoardMapper;
 import io.github.anthogdn.iataaa.checkersDto.entity.TokenDto;
 import io.github.anthogdn.iataaa.checkersDto.entity.read.CheckersReadDto;
 import io.github.anthogdn.iataaa.checkersDto.entity.read.CreatedCheckersReadDto;
+
+import java.util.UUID;
 
 public class CheckersMapper {
 
@@ -16,7 +19,7 @@ public class CheckersMapper {
         tokenDto.setKey(checkersEntity.getPlayer().getToken());
 
         CheckersReadDto checkersReadDto = new CheckersReadDto();
-        checkersReadDto.setId(checkersEntity.getId());
+        checkersReadDto.setId(UUID.fromString(checkersEntity.getId()));
         checkersReadDto.setBoard(CheckersBoardMapper.stringToCheckersBoardDto(checkersEntity.getBoard()));
         checkersReadDto.setName(checkersEntity.getName());
         checkersReadDto.setPlayer(PlayerMapper.playerEntityToPlayerReadDto(checkersEntity.getPlayer()));
@@ -50,7 +53,7 @@ public class CheckersMapper {
 
     public static CheckersReadDto checkersEntityToCheckersReadDto(CheckersEntity checkersEntity) {
         CheckersReadDto checkersReadDto = new CheckersReadDto();
-        checkersReadDto.setId(checkersEntity.getId());
+        checkersReadDto.setId(UUID.fromString(checkersEntity.getId()));
         checkersReadDto.setName(checkersEntity.getName());
         checkersReadDto.setTurnPlayer(PlayerNbMapper.playerNbEntityToPlayerNbDto(checkersEntity.getTurnPlayer()));
         checkersReadDto.setWinner(PlayerNbMapper.playerNbEntityToPlayerNbDto(checkersEntity.getWinner()));

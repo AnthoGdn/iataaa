@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 import static io.github.anthogdn.iataaa.checkersApi.Path.API_PATH;
 
@@ -46,7 +45,7 @@ public class CheckersController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CheckersReadDto play(
-            @PathVariable("id") UUID id,
+            @PathVariable("id") String id,
             @RequestBody @Valid CheckersMoveWriteDto move
     ) throws NotAuthorizedException {
         return checkersEntityService.play(id, move);
