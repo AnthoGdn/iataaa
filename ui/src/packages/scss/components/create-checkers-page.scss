@@ -1,0 +1,18 @@
+.ia-c-create-checkers-page {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../../assets/checkers_wallpaper.jpg");
+  background-size: cover;
+
+  &__container {
+    padding: 2em 4em;
+    background-color: white;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+}

@@ -1,0 +1,9 @@
+.ia-c-case-row {
+  display: flex;
+  flex: 1;
+
+  &__item {
+    display: flex;
+    flex: 1;
+  }
+}

@@ -1,0 +1,12 @@
+.ia-c-player-board {
+  margin: 2rem;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  min-height: 9em;
+  box-shadow: 2px 2px 12px black;
+
+  &__card-content {
+    text-align: center;
+  }
+}

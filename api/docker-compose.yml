@@ -9,21 +9,9 @@ networks:
         - subnet: 172.16.0.0/24
 
 services:
-  checkers-api-db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: iataaa
-      MYSQL_USER: iataaa
-      MYSQL_PASSWORD: password
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-    networks:
-      iataaa:
-        ipv4_address: 172.16.0.15
-
   checkers-api:
-    build: checkers-api
+    container_name: checkers-api
+    build: checkers/checkers-api
     environment:
       DB_IP: 172.16.0.15
       DB_PORT: 3306
@@ -37,8 +25,23 @@ services:
       iataaa:
         ipv4_address: 172.16.0.10
 
+  checkers-api-db:
+    container_name: checkers-api-db
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: iataaa
+      MYSQL_USER: iataaa
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      iataaa:
+        ipv4_address: 172.16.0.15
+
   checkers-rules-api:
-    build: checkers-rules-api
+    container_name: checkers-rules-api
+    build: checkers/checkers-rules-api
     environment:
       VERSION: 0.1.0
     networks:
