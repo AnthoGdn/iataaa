@@ -1,0 +1,25 @@
+.ia-c-loader {
+  display: inline-block;
+  position: relative;
+  width: 1rem;
+
+  $size: .75rem;
+
+  &::before {
+    content: "\A0";
+  }
+
+  &::after {
+    content: '';
+    animation: ia-spin .5s linear infinite;
+    width: $size;
+    height: $size;
+    border: .15rem solid;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+  }
+}

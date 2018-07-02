@@ -4,7 +4,7 @@ Api to read and write checkers
 ## Getting Started
 ### Requirements
 * Java 9
-* Docker-Compose
+* Docker Compose
 
 #### Build modules
 To build maven modules, run :

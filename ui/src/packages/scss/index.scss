@@ -1,0 +1,33 @@
+@import 'bootstrap/scss/bootstrap';
+
+/*************/
+// Mixins
+/*************/
+@import "mixins/spin.scss";
+
+/*************/
+// Objects
+/*************/
+@import "objects/btn.scss";
+@import "objects/badge.scss";
+
+/*************/
+// Components
+/*************/
+@import './components/app.scss';
+@import './components/create-checkers-page.scss';
+@import './components/checkers-form.scss';
+@import './components/checkers.scss';
+@import './components/checkers-board.scss';
+@import './components/player-board.scss';
+@import './components/case-row.scss';
+@import './components/case.scss';
+@import './components/loader.scss';
+
+html, body, #root {
+  height: 100%;
+}
+
+
+
+

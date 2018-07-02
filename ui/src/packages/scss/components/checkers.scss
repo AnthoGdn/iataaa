@@ -1,0 +1,21 @@
+.ia-c-checkers {
+  display: flex;
+  height: 100%;
+  background-image: url("../../assets/panel.jpg");
+  background-size: cover;
+
+  &__item {
+    height: 100%;
+  }
+  &__panel {
+    flex: 1;
+  }
+  &__board {
+    margin: auto;
+  }
+  @media screen and (max-width: 82em) {
+    &__panel {
+      display: none;
+    }
+  }
+}

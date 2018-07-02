@@ -1,0 +1,41 @@
+.ia-c-case {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.as--possible-move {
+    flex: 1;
+    background-color: red;
+  }
+
+  &.as--black {
+    flex: 1;
+    background-color: black;
+    color: white;
+
+    .ia-c-case__piece {
+      width: 70%;
+      height: 70%;
+      border-radius: 50%;
+
+      &.--white {
+        background-color: white;
+      }
+      &.--black {
+        background-color: gray;
+      }
+
+      &.--piece {
+
+      }
+      &.--queen {
+        border: .5em solid red;
+      }
+    }
+  }
+
+  &.ia-c-case.as--white {
+    background-color: white;
+    flex: 1;
+  }
+}

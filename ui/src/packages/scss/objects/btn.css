@@ -1,0 +1,20 @@
+.btn.as--loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none; }
+  .btn.as--loading:after {
+    content: "";
+    animation: ia-spin .5s linear infinite;
+    border: 0.15rem solid white;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-radius: .5em;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -.5rem;
+    margin-top: -.5rem;
+    z-index: 1; }

@@ -1,0 +1,49 @@
+version: '3'
+
+networks:
+  iataaa:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+
+services:
+  checkers-api:
+    container_name: checkers-api
+    image: iataaa/checkers-api:0.1.0
+    environment:
+      DB_IP: 172.16.0.15
+      DB_PORT: 3306
+      DB_DATABASE: iataaa
+      DB_USER: iataaa
+      DB_PASSWORD: password
+      VERSION: 0.1.0
+    depends_on:
+      - checkers-api-db
+    networks:
+      iataaa:
+        ipv4_address: 172.16.0.10
+
+  checkers-api-db:
+    container_name: checkers-api-db
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: iataaa
+      MYSQL_USER: iataaa
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      iataaa:
+        ipv4_address: 172.16.0.15
+
+  checkers-rules-api:
+    container_name: checkers-rules-api
+    image: iataaa/checkers-rules-api:0.1.0
+    environment:
+      VERSION: 0.1.0
+    networks:
+      iataaa:
+        ipv4_address: 172.16.0.20
