@@ -22,8 +22,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
-import static io.github.anthogdn.iataaa.checkersApi.CheckersBoardUtil.INITIAL_CHECKERS_BOARD_STRING;
 import static io.github.anthogdn.iataaa.checkersApi.CheckersUtil.getInitialCheckersMoveWriteDto;
+import static io.github.anthogdn.iataaa.checkersTestUtil.CheckersBoardUtil.INITIAL_CHECKERS_BOARD_STRING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -63,13 +63,13 @@ public class CheckersIntegrationTest {
     public void playMove() throws NotAuthorizedException {
         // GIVEN
 
-        UUID playerId = UUID.randomUUID();
+        String playerId = UUID.randomUUID().toString();
         String playerName = "player";
         PlayerNbEntity playerNb = PlayerNbEntity.PLAYER_1;
         String token = "token";
 
 
-        UUID checkersId = UUID.randomUUID();
+        String checkersId = UUID.randomUUID().toString();
         String board = INITIAL_CHECKERS_BOARD_STRING;
         String checkersName = "game";
         PlayerNbEntity turnPlayer = PlayerNbEntity.PLAYER_1;
@@ -110,7 +110,7 @@ public class CheckersIntegrationTest {
         // THEN
         assertThat(checkersReadDto).isNotNull();
         assertThat(checkersReadDto.getName()).isEqualTo(checkersName);
-        assertThat(checkersReadDto.getId()).isNotNull();
+        assertThat(checkersReadDto.getId().toString()).isNotNull();
         assertThat(checkersReadDto.getWinner()).isNull();
         assertThat(checkersReadDto.getPlayer().getName()).isEqualTo(playerName);
         assertThat(checkersReadDto.getPlayer().getPlayerNbDto()).isEqualTo(PlayerNbDto.PLAYER_1);
@@ -171,8 +171,8 @@ public class CheckersIntegrationTest {
     }
 
     private CheckersEntity createCheckersInDB(
-            UUID playerId, String playerName, PlayerNbEntity playerNb, String token,
-            UUID checkersId, String board, String checkersName, PlayerNbEntity turnPlayer, PlayerNbEntity winner
+            String playerId, String playerName, PlayerNbEntity playerNb, String token,
+            String checkersId, String board, String checkersName, PlayerNbEntity turnPlayer, PlayerNbEntity winner
     ) {
         PlayerEntity playerEntity = createPlayerInDb(playerId, playerName, playerNb, token);
         CheckersEntity checkersEntity = new CheckersEntity();
@@ -187,7 +187,7 @@ public class CheckersIntegrationTest {
         return checkersEntity;
     }
 
-    private PlayerEntity createPlayerInDb(UUID id, String name, PlayerNbEntity playerNb, String token) {
+    private PlayerEntity createPlayerInDb(String id, String name, PlayerNbEntity playerNb, String token) {
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setId(id);
         playerEntity.setName(name);

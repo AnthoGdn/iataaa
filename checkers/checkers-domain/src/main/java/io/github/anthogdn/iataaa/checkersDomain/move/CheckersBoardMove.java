@@ -1,12 +1,13 @@
 package io.github.anthogdn.iataaa.checkersDomain.move;
 
 import io.github.anthogdn.iataaa.checkersDomain.model.Case;
+import io.github.anthogdn.iataaa.checkersDomain.model.Move;
 import io.github.anthogdn.iataaa.checkersDomain.model.PlayerNb;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static io.github.anthogdn.iataaa.checkersDomain.model.CheckersBoard.*;
 
@@ -18,35 +19,64 @@ public class CheckersBoardMove {
 
     private static List<Case[]> availableMoves = new ArrayList<>();
     private static int moveSize = 1;
+    private static Set<Move> availableChainMoves = new HashSet<>();
 
     public static List<Case[]> getAvailableMoves(Case[] cases, PlayerNb playerNb) {
-        List<Integer> whiteCases;
-        if (playerNb == PlayerNb.PLAYER_2) {
-            cases = reverseCases(cases);
-        }
-        whiteCases = getWhiteCases(cases);
+        computeAvailableMoves(cases, playerNb);
 
-        final Case[] finalCases = cases;
-        whiteCases.forEach(whiteCase -> fillAvailableMovesForOneCase(finalCases, whiteCase));
-
-        transformPieceToQueen();
-
-        List<Case[]> availableMovesList;
-        if (playerNb == PlayerNb.PLAYER_2) {
-            availableMovesList = new ArrayList<>();
-            availableMoves.forEach((c) -> availableMovesList.add(reverseCases(c)));
-        } else {
-            availableMovesList = availableMoves;
-        }
-        List<Case[]> result = new ArrayList<>(availableMovesList);
+        List<Case[]> result = new ArrayList<>(availableMoves);
         availableMoves.clear();
+        availableChainMoves.clear();
         moveSize = 1;
 
         return result;
     }
 
+    public static Set<Move> getAvailableChainMoves(Case[] cases, PlayerNb playerNb) {
+        computeAvailableMoves(cases, playerNb);
+
+        Set<Move> chainMoves = new HashSet<>(availableChainMoves);
+        availableMoves.clear();
+        availableChainMoves.clear();
+        moveSize = 1;
+
+        return chainMoves;
+    }
+
 
 // PRIVATE
+    private static void computeAvailableMoves(Case[] cases, PlayerNb playerNb) {
+        Case[] casesClone = cases.clone();
+        if (playerNb == PlayerNb.PLAYER_2) {
+            casesClone = reverseCases(cases);
+        }
+        List<Integer> whiteCasesPosition = getWhiteCases(casesClone);
+
+        final Case[] finalCases = casesClone;
+        whiteCasesPosition.forEach(whiteCase -> fillAvailableMoves(finalCases, whiteCase));
+
+        availableMoves = transformPieceToQueen(availableMoves);
+        availableChainMoves = availableChainMoves
+                .stream()
+                .map(CheckersBoardMove::transformPieceToQueen)
+                .collect(Collectors.toSet());
+
+        if (playerNb == PlayerNb.PLAYER_2) {
+            availableMoves = availableMoves
+                    .stream()
+                    .map(CheckersBoardMove::reverseCases)
+                    .collect(Collectors.toList());
+            availableChainMoves = availableChainMoves
+                    .stream()
+                    .map(move -> new Move(
+                            move.getMove()
+                                    .stream()
+                                    .map(CheckersBoardMove::reverseCases)
+                                    .collect(Collectors.toList())
+                    ))
+                    .collect(Collectors.toSet());
+        }
+    }
 
     // Return -1 if result don't exist.
     private static int getTopLeftCornerPosition(int position) {
@@ -229,18 +259,20 @@ public class CheckersBoardMove {
         return res;
     }
 
-    private static void addMoveInAvailableMoves(int position, Case[] pieces, int srcPosition) {
+    private static Optional<Case[]> getMove(int position, Case[] pieces, int srcPosition) {
+        Optional<Case[]> move = Optional.empty();
         if (position != -1) {
             Case boardCase = pieces[position];
             if (boardCase == Case.EMPTY) {
-                Case[] move = getMoveWhiteCase(pieces, srcPosition, position);
-                availableMoves.add(move);
+                move = Optional.of(getMoveWhiteCase(pieces, srcPosition, position));
             }
         }
+        return move;
     }
 
-    private static void addMovesInAvailableMovesForQueen(List<Integer> positions, Case[] pieces, int srcPosition) {
+    private static List<Case[]> getMovesForQueen(List<Integer> positions, Case[] pieces, int srcPosition) {
         int k, i;
+        List<Case[]> moves = new ArrayList<>();
         Case[] newCases;
         int sizePositions = positions.size();
         if (!positions.isEmpty()) {
@@ -249,7 +281,7 @@ public class CheckersBoardMove {
             while (i < sizePositions && pieces[k] == Case.EMPTY) {
                 // We add all position until we meet a piece.
                 newCases = getMoveWhiteCase(pieces, srcPosition, k);
-                availableMoves.add(newCases);
+                moves.add(newCases);
                 k = positions.get(i);
                 ++i;
                 if (i < sizePositions) {
@@ -257,39 +289,58 @@ public class CheckersBoardMove {
                 }
             }
         }
+        return moves;
     }
 
     // Fill availableMoves of all possible moves
-    private static void fillAvailableMovesForOneCase(Case[] pieces, int srcPosition) {
+    private static void fillAvailableMoves(Case[] pieces, int srcPosition) {
         assert pieces[srcPosition] != Case.BLACK_PIECE;
         assert pieces[srcPosition] != Case.BLACK_QUEEN;
         assert pieces[srcPosition] != Case.EMPTY;
 
-        boolean isPossibleToJump = sequenceJump(pieces, srcPosition, 1, new ArrayList<>());
+        boolean isPossibleToJump = sequenceJump(pieces, srcPosition, 1, new ArrayList<>(), new Move());
         if (!isPossibleToJump && moveSize == 1) { // If we can't jump a piece.
             // If moveSize is not equal to 1 then it's useless
-            // to continue because there are more long move in avalaibleMove.
+            // to continue because there are more long move in availableMove.
             if (pieces[srcPosition] == Case.WHITE_PIECE) {
                 // If piece is not queen and it can't jump piece.
 
             //------------------------------------------------------------------
+                Optional<Case[]> cases;
                 // Left side piece.
                 int topLeftCornerPosition = getTopLeftCornerPosition(srcPosition);
                 if (topLeftCornerPosition != -1) {
-                    addMoveInAvailableMoves(topLeftCornerPosition, pieces, srcPosition);
+                    cases = getMove(topLeftCornerPosition, pieces, srcPosition);
+                    cases.ifPresent(it -> {
+                        availableMoves.add(it);
+                        List<Case[]> moveList = new ArrayList<>();
+                        moveList.add(it);
+                        availableChainMoves.add(new Move(moveList));
+                    });
                 }
                 //------------------------------------------------------------------
                 // Right side piece.
                 int topRightCornerPosition = getTopRightCornerPosition(srcPosition);
                 if (topRightCornerPosition != -1) {
-                    addMoveInAvailableMoves(topRightCornerPosition, pieces, srcPosition);
+                    cases = getMove(topRightCornerPosition, pieces, srcPosition);
+                    cases.ifPresent(it -> {
+                        availableMoves.add(it);
+                        List<Case[]> moveList = new ArrayList<>();
+                        moveList.add(it);
+                        availableChainMoves.add(new Move(moveList));
+                    });
                 }
             } else {
                 // Piece is a queen and it can't jump piece.
-                addMovesInAvailableMovesForQueen(getAllTopLeftCornerPositions(srcPosition), pieces, srcPosition);
-                addMovesInAvailableMovesForQueen(getAllTopRightCornerPositions(srcPosition), pieces, srcPosition);
-                addMovesInAvailableMovesForQueen(getAllBottomLeftCornerPositions(srcPosition), pieces, srcPosition);
-                addMovesInAvailableMovesForQueen(getAllBottomRightCornerPositions(srcPosition), pieces, srcPosition);
+                List<Case[]> moves;
+                moves = getMovesForQueen(getAllTopLeftCornerPositions(srcPosition), pieces, srcPosition);
+                availableMoves.addAll(moves);
+                moves = getMovesForQueen(getAllTopRightCornerPositions(srcPosition), pieces, srcPosition);
+                availableMoves.addAll(moves);
+                moves = getMovesForQueen(getAllBottomLeftCornerPositions(srcPosition), pieces, srcPosition);
+                availableMoves.addAll(moves);
+                moves = getMovesForQueen(getAllBottomRightCornerPositions(srcPosition), pieces, srcPosition);
+                availableMoves.addAll(moves);
             }
         }
     }
@@ -317,7 +368,8 @@ public class CheckersBoardMove {
             Case[] pieces,
             int srcPosition,
             final int size,
-            List<Integer> jumpedCases
+            List<Integer> jumpedCases,
+            Move move
     ) {
         assert pieces[srcPosition] != Case.BLACK_PIECE;
         assert pieces[srcPosition] != Case.BLACK_QUEEN;
@@ -328,35 +380,39 @@ public class CheckersBoardMove {
         if (pieces[srcPosition] == Case.WHITE_PIECE) {
             int tgtPosition;
             int jumpedPosition;
-            boolean addJumpedMoveToSequence;
+            boolean isAddJumpedMoveToSequence;
 
         // Top left
             jumpedPosition = getTopLeftCornerPosition(srcPosition);
             tgtPosition = getTopLeftCornerPosition(srcPosition, 2);
-            addJumpedMoveToSequence = addJumpedMoveToSequence(pieces,
-                srcPosition, jumpedPosition, tgtPosition, size);
-            isPossibleToJump = addJumpedMoveToSequence;
+            isAddJumpedMoveToSequence = addJumpedMoveToSequence(
+                    pieces, srcPosition, jumpedPosition, tgtPosition, size, move
+            );
+            isPossibleToJump = isAddJumpedMoveToSequence;
 
         // Top right
             jumpedPosition = getTopRightCornerPosition(srcPosition);
             tgtPosition = getTopRightCornerPosition(srcPosition, 2);
-            addJumpedMoveToSequence = addJumpedMoveToSequence(pieces,
-                srcPosition, jumpedPosition, tgtPosition, size);
-            isPossibleToJump = isPossibleToJump || addJumpedMoveToSequence;
+            isAddJumpedMoveToSequence = addJumpedMoveToSequence(
+                    pieces, srcPosition, jumpedPosition, tgtPosition, size, move
+            );
+            isPossibleToJump = isPossibleToJump || isAddJumpedMoveToSequence;
 
         // Bottom left
             jumpedPosition = getBottomLeftCornerPosition(srcPosition);
             tgtPosition = getBottomLeftCornerPosition(srcPosition, 2);
-            addJumpedMoveToSequence = addJumpedMoveToSequence(pieces,
-                srcPosition, jumpedPosition, tgtPosition, size);
-            isPossibleToJump = isPossibleToJump || addJumpedMoveToSequence;
+            isAddJumpedMoveToSequence = addJumpedMoveToSequence(
+                    pieces, srcPosition, jumpedPosition, tgtPosition, size, move
+            );
+            isPossibleToJump = isPossibleToJump || isAddJumpedMoveToSequence;
 
         // Bottom right
             jumpedPosition = getBottomRightCornerPosition(srcPosition);
             tgtPosition = getBottomRightCornerPosition(srcPosition, 2);
-            addJumpedMoveToSequence = addJumpedMoveToSequence(pieces,
-                srcPosition, jumpedPosition, tgtPosition, size);
-            isPossibleToJump = isPossibleToJump || addJumpedMoveToSequence;
+            isAddJumpedMoveToSequence = addJumpedMoveToSequence(
+                    pieces, srcPosition, jumpedPosition, tgtPosition, size, move
+            );
+            isPossibleToJump = isPossibleToJump || isAddJumpedMoveToSequence;
 
         } else { // If piece is queen
             List<Integer> positions;
@@ -375,7 +431,9 @@ public class CheckersBoardMove {
                         isPossibleToJump = true;
                         newCases = getJumpBlackCase(pieces, srcPosition, jumpedPos, tgtPos);
                         jumpedCases.add(jumpedPos);
-                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases);
+                        Move clonedChainMove = move.clone();
+                        clonedChainMove.add(newCases);
+                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases, clonedChainMove);
                         jumpedCases.remove(jumpedCases.indexOf(jumpedPos));
                     }
                 }
@@ -392,7 +450,9 @@ public class CheckersBoardMove {
                         isPossibleToJump = true;
                         newCases = getJumpBlackCase(pieces, srcPosition, jumpedPos, tgtPos);
                         jumpedCases.add(jumpedPos);
-                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases);
+                        Move clonedChainMove = move.clone();
+                        clonedChainMove.add(newCases);
+                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases, clonedChainMove);
                         jumpedCases.remove(jumpedCases.indexOf(jumpedPos));
                     }
                 }
@@ -410,7 +470,9 @@ public class CheckersBoardMove {
                         isPossibleToJump = true;
                         newCases = getJumpBlackCase(pieces, srcPosition, jumpedPos, tgtPos);
                         jumpedCases.add(jumpedPos);
-                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases);
+                        Move clonedChainMove = move.clone();
+                        clonedChainMove.add(newCases);
+                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases, clonedChainMove);
                         jumpedCases.remove(jumpedCases.indexOf(jumpedPos));
                     }
                 }
@@ -428,7 +490,9 @@ public class CheckersBoardMove {
                         isPossibleToJump = true;
                         newCases = getJumpBlackCase(pieces, srcPosition, jumpedPos, tgtPos);
                         jumpedCases.add(jumpedPos);
-                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases);
+                        Move clonedChainMove = move.clone();
+                        clonedChainMove.add(newCases);
+                        sequenceJump(newCases, tgtPos, size + 1, jumpedCases, clonedChainMove);
                         jumpedCases.remove(jumpedCases.indexOf(jumpedPos));
                     }
                 }
@@ -441,10 +505,13 @@ public class CheckersBoardMove {
 
             if (size == moveSize) {
                 availableMoves.add(pieces);
+                availableChainMoves.add(move);
             } else if (size > moveSize) {
                 moveSize = size;
                 availableMoves.clear();
                 availableMoves.add(pieces);
+                availableChainMoves.clear();
+                availableChainMoves.add(move);
             }
         }
 
@@ -497,7 +564,8 @@ public class CheckersBoardMove {
             int srcPosition,
             int jumpedPosition,
             int tgtPosition,
-            int size
+            int size,
+            Move move
     ) {
         boolean isPossibleToJump = false;
         if (jumpedPosition != -1 && tgtPosition != -1) {
@@ -508,7 +576,9 @@ public class CheckersBoardMove {
                 // If piece can jump adverse piece in top left corner
                 isPossibleToJump = true;
                 Case[] newCases = getJumpBlackCase(pieces, srcPosition, jumpedPosition, tgtPosition);
-                sequenceJump(newCases, tgtPosition, size + 1, null);
+                Move clonedMove = move.clone();
+                clonedMove.add(newCases);
+                sequenceJump(newCases, tgtPosition, size + 1, null, clonedMove);
             }
         }
         return isPossibleToJump;
@@ -594,14 +664,36 @@ public class CheckersBoardMove {
         return opposite;
     }
 
-    private static void transformPieceToQueen() {
-        availableMoves.forEach((pcs) -> {
-            for (int i = 49; i >= 45; --i) {
-                if (pcs[i] == Case.WHITE_PIECE) {
-                    pcs[i] = Case.WHITE_QUEEN;
-                }
+    private static Case[] transformPieceToQueen(Case[] cases) {
+        Case[] clonedCases = cases.clone();
+        for (int i = 49; i >= 45; --i) {
+            if (clonedCases[i] == Case.WHITE_PIECE) {
+                clonedCases[i] = Case.WHITE_QUEEN;
             }
-        });
+        }
+        return clonedCases;
+    }
+
+    private static List<Case[]> transformPieceToQueen(List<Case[]> cases) {
+        return cases
+            .stream()
+            .map(CheckersBoardMove::transformPieceToQueen)
+            .collect(Collectors.toList());
+    }
+
+    private static Move transformPieceToQueen(Move move) {
+        return new Move(
+            move.getMove()
+                .stream()
+                .map(cases -> {
+                    if (Arrays.equals(cases, move.getLast())) {
+                        return transformPieceToQueen(cases);
+                    } else {
+                        return cases;
+                    }
+                })
+                .collect(Collectors.toList())
+        );
     }
 
 // ENUM
