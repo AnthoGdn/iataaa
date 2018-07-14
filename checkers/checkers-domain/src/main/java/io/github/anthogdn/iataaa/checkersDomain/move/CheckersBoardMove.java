@@ -335,12 +335,16 @@ public class CheckersBoardMove {
                 List<Case[]> moves;
                 moves = getMovesForQueen(getAllTopLeftCornerPositions(srcPosition), pieces, srcPosition);
                 availableMoves.addAll(moves);
+                moves.forEach(move -> availableChainMoves.add(new Move(move)));
                 moves = getMovesForQueen(getAllTopRightCornerPositions(srcPosition), pieces, srcPosition);
                 availableMoves.addAll(moves);
+                moves.forEach(move -> availableChainMoves.add(new Move(move)));
                 moves = getMovesForQueen(getAllBottomLeftCornerPositions(srcPosition), pieces, srcPosition);
                 availableMoves.addAll(moves);
+                moves.forEach(move -> availableChainMoves.add(new Move(move)));
                 moves = getMovesForQueen(getAllBottomRightCornerPositions(srcPosition), pieces, srcPosition);
                 availableMoves.addAll(moves);
+                moves.forEach(move -> availableChainMoves.add(new Move(move)));
             }
         }
     }
