@@ -1,0 +1,20 @@
+.ia-c-checkers-board {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 0.2em solid darkgrey;
+  border-radius: 2px;
+}
+
+@media screen and (orientation:landscape) {
+  .ia-c-checkers-board{
+    height: 93vh;
+    width: 93vh;
+  }
+}
+@media screen and (orientation:portrait) {
+  .ia-c-checkers-board{
+    height: 93vw;
+    width: 93vw;
+  }
+}

@@ -1,0 +1,16 @@
+// @flow
+export type WHITE_PIECE = 'WHITE_PIECE';
+export type WHITE_QUEEN = 'WHITE_QUEEN';
+export type BLACK_PIECE = 'BLACK_PIECE';
+export type BLACK_QUEEN = 'BLACK_QUEEN';
+export type EMPTY = 'EMPTY';
+
+export type Case = WHITE_PIECE | WHITE_QUEEN | BLACK_PIECE | BLACK_QUEEN | EMPTY;
+
+export const Cases = {
+  WHITE_PIECE: 'WHITE_PIECE',
+  WHITE_QUEEN: 'WHITE_QUEEN',
+  BLACK_PIECE: 'BLACK_PIECE',
+  BLACK_QUEEN: 'BLACK_QUEEN',
+  EMPTY: 'EMPTY',
+};

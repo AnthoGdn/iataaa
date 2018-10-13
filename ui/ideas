@@ -1,0 +1,20 @@
+Ajouter les modules suivants:
+- checkers-domain: expose les types (flow ? tcomb ?) ainsi qu'eventuellement des services du jeu de dames (règles)
+- checkers-requester: requester http pour communiquer avec le back. Du simple js (avec axios ou fetch) (dependant des types de domain ?)
+- checkers-store: store redux qui exporte des actions ainsi qu'un state en rapport avec le metier (dependant des types de domain ?)
+- design-system: (à méditer) expose le css. C'est lui qui importera bootstrap par exemple.
+
+Au final le projet React est une appli monopage qui contient des composants React et qui se branchent aux modules précédents.
+L'utilisation de React doit être la plus lache possible.
+De cette façon l'appli sera la moins dépendante possible de React et nous pourront la changer sans que ça coute cher. (même raisonnement pour redux).
+
+Idées:
+- Les modules doivent être des modules npm ou js ?
+- Les composants React n'auront pas de logique métier. Il peut etre interessant de trouver des bibliothèques de composant que je pourrais réutiliser.
+
+
+Pour le future: L'authentification doit elle être géré dans un module à part ? Qu'est ce qu'elle implique ?
+
+
+Flow: typage statique. La bibli dispose de pleins de fonctionnalités sympa ! Enum, immuabilité, typages etc... Mais ça reste du typage statique. Impossible de vérifier les dto reçu des api. Il faut ajouter du typage dynamique. tcomb ?
+Test mMapStruct

@@ -1,0 +1,151 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2018-06-30T09:52:15.443Z",
+	"__export_source": "insomnia.desktop.app:v5.8.4",
+	"resources": [
+		{
+			"_id": "wrk_1f23e646d20c424b99089d4ddf9ec91e",
+			"parentId": null,
+			"modified": 1530041480541,
+			"created": 1518290813096,
+			"name": "iataaa",
+			"description": "",
+			"certificates": [],
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_76f623772c5240c9a5e57367a138dfa7",
+			"parentId": "wrk_1f23e646d20c424b99089d4ddf9ec91e",
+			"modified": 1518291663261,
+			"created": 1518290813103,
+			"name": "Base Environment",
+			"data": {},
+			"color": null,
+			"isPrivate": false,
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_9d2002c514724562b23fb8008daee338",
+			"parentId": "wrk_1f23e646d20c424b99089d4ddf9ec91e",
+			"modified": 1518290813100,
+			"created": 1518290813100,
+			"name": "Default Jar",
+			"cookies": [],
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_63e88cbf398841e29d7f6818bd87a0e7",
+			"parentId": "wrk_1f23e646d20c424b99089d4ddf9ec91e",
+			"modified": 1530352320563,
+			"created": 1518955163424,
+			"name": "CheckersGameApi",
+			"description": "",
+			"environment": {
+				"apiUrl": "http://172.16.0.10:8080/checkers-api/v1"
+			},
+			"metaSortKey": -1518955163424,
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_7c037fbff96c4642911bf8d5316aa1f5",
+			"parentId": "wrk_1f23e646d20c424b99089d4ddf9ec91e",
+			"modified": 1530352207916,
+			"created": 1528055845115,
+			"name": "CheckersRulesApi",
+			"description": "",
+			"environment": {
+				"apiUrl": "http://172.16.0.20:8080/checkers-rules-api/v1"
+			},
+			"metaSortKey": -1528055845115,
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_2d1a69effa8444c6ad5f9b14bc5a3b0b",
+			"parentId": "fld_63e88cbf398841e29d7f6818bd87a0e7",
+			"modified": 1528055855745,
+			"created": 1518955177846,
+			"url": "{{ apiUrl}}/checkers/ee83e73e-764d-4c89-ba1c-26ade4983171",
+			"name": "play",
+			"description": "",
+			"method": "PUT",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"token\": {\n\t\t\"key\": \"cb8d9605-72fb-4b43-85be-ffffdbe51075\"\n\t},\n\t\"move\": {\n\t\t\"cases\": [\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"EMPTY\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\"\n\t\t]\n\t}\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"id": "pair_fce6d8ef2219491c91b1eaca657a0cb3",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1518955177846,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_f009020864d04b368e53338186a5c6c9",
+			"parentId": "fld_63e88cbf398841e29d7f6818bd87a0e7",
+			"modified": 1530219382210,
+			"created": 1525190561462,
+			"url": "{{ apiUrl}}/checkers",
+			"name": "create",
+			"description": "",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"name\": \"game2\",\n\t\"player\": {\n\t\t\"name\": \"speeder2\"\n\t}\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"id": "pair_fce6d8ef2219491c91b1eaca657a0cb3",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1518623052122.5,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_03e0312854f14440be4a821d98b90240",
+			"parentId": "fld_7c037fbff96c4642911bf8d5316aa1f5",
+			"modified": 1530217617291,
+			"created": 1528055881724,
+			"url": "{{ apiUrl }}/checkers/moves",
+			"name": "getAvailableChainMoves",
+			"description": "",
+			"method": "PUT",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"turnPlayer\": \"PLAYER_1\",\n\t\"board\": {\n\t\t\"cases\": [\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"EMPTY\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"WHITE_PIECE\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"EMPTY\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\",\n\t\t\t\"BLACK_PIECE\"\n\t\t]\n\t}\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_816db18eb0be471189dd7c72cfd663c1"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1528055881724,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		}
+	]
+}

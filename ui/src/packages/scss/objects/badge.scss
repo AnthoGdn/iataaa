@@ -1,0 +1,30 @@
+.badge {
+
+  &.as--xxs {
+    font-size: .5rem;
+  }
+
+  &.as--xs {
+    font-size: .65rem;
+  }
+
+  &.as--sm {
+    font-size: .75rem;
+  }
+
+  &.as--md {
+    font-size: 1rem;
+  }
+
+  &.as--lg {
+    font-size: 1.3rem;
+  }
+
+  &.as--xl {
+    font-size: 1.6rem;
+  }
+
+  &.as--xxl {
+    font-size: 2rem;
+  }
+}
