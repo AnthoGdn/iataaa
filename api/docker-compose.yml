@@ -27,14 +27,14 @@ services:
 
   checkers-api-db:
     container_name: checkers-api-db
-    image: mysql:5.7
+    image: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: iataaa
-      MYSQL_USER: iataaa
-      MYSQL_PASSWORD: password
+      POSTGRES_ROOT_PASSWORD: password
+      POSTGRES_DB: iataaa
+      POSTGRES_USER: iataaa
+      POSTGRES_PASSWORD: password
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./data/postgres:/var/lib/postgres
     networks:
       iataaa:
         ipv4_address: 172.16.0.15

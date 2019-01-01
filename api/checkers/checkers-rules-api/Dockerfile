@@ -1,8 +1,4 @@
 FROM openjdk:9-jdk
-MAINTAINER Anthony Godin <gdn.anthony@gmail.com>
-
-ENV VERSION 0.1.0
-ADD ./target/checkers-rules-api-$VERSION-SNAPSHOT.jar /app/
-ENTRYPOINT java -jar "/app/checkers-rules-api-$VERSION-SNAPSHOT.jar"
-
-EXPOSE 8080
+VOLUME /tmp
+COPY target/checkers-rules-api-0.1.0-SNAPSHOT.jar checkers-rules-api-0.1.0-SNAPSHOT.jar
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/checkers-rules-api-0.1.0-SNAPSHOT.jar"]

@@ -1,8 +1,5 @@
 FROM openjdk:9-jdk
-MAINTAINER Anthony Godin <gdn.anthony@gmail.com>
+VOLUME /tmp
+COPY target/checkers-api-0.1.0-SNAPSHOT.jar checkers-api-0.1.0-SNAPSHOT.jar
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/checkers-api-0.1.0-SNAPSHOT.jar"]
 
-ENV VERSION 0.1.0
-ADD ./target/checkers-api-$VERSION-SNAPSHOT.jar /app/
-ENTRYPOINT java -jar "/app/checkers-api-$VERSION-SNAPSHOT.jar"
-
-EXPOSE 8080
