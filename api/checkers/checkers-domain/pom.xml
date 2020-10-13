@@ -19,7 +19,7 @@
     <inceptionYear>2018</inceptionYear>
 
     <properties>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <assertj.version>2.6.0</assertj.version>
         <mockito.version>1.10.19</mockito.version>
         <commons-lang3.version>3.7</commons-lang3.version>
